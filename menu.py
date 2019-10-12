@@ -95,7 +95,17 @@ def main(stdscr):
                 casa.alquilado = 1
 
                 session.commit()
-                time.sleep(3)
+
+            elif current_row_idx == 3:
+                curses.endwin()
+                os.system('clear')
+                alquileres = session.query(Alquiler).order_by(Alquiler.fechainicio).all()
+
+                for alquiler in alquileres:
+                    print("\n")
+                    print(alquiler)
+
+                goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
             elif current_row_idx == len(opciones) - 1:
                 curses.endwin()
