@@ -110,6 +110,9 @@ def main(stdscr):
             elif current_row_idx == len(opciones) - 1:
                 curses.endwin()
                 os.system('clear')
+                print("Hasta luego!")
+                time.sleep(2)
+                os.system('clear')
                 break
 
         print_menu(stdscr, current_row_idx)
