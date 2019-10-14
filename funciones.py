@@ -42,6 +42,15 @@ def AgregarAlquiler(inquilino_id, inmueble_id):
     return alquiler
 
 
+def mostrar_cliente(cliente):
+    print(cliente)
+    print("Telefono: " + str(cliente.telefono))
+    print("Domicilio: " + str(cliente.domicilio))
+    print("Email: " + str(cliente.email))
+    print("Dueño de: ")
+    for propiedad in cliente.propiedades:
+        print(propiedad)
+
 def BorrarAlquiler():
     pass
 
