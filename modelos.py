@@ -1,6 +1,7 @@
 from database import Base, engine
 from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, func, Boolean
 from sqlalchemy.orm import relationship
+from datetime import datetime, date, timedelta
 
 
 class Cliente(Base):
@@ -29,7 +30,6 @@ class Cliente(Base):
 
 
 class Inmueble(Base):
-
     __tablename__ = 'inmueble'
 
     inmuebleId = Column('inmuebleId', Integer, primary_key=True)
@@ -59,7 +59,6 @@ class Inmueble(Base):
 
 
 class Alquiler(Base):
-
     __tablename__ = 'alquiler'
 
     alquilerId = Column('alquilerId', Integer, primary_key=True)
@@ -78,8 +77,10 @@ class Alquiler(Base):
 
     def __repr__(self):
         return 'Casa: ' + str(self.inmueble) + '\nInquilino:  ' + str(self.inquilino) + '\nDueño:  ' + str(
-            self.inmueble.propietario)
-
+            self.inmueble.propietario) + "\nInicio de alquiler: " + str(
+            self.fechainicio.day) + "-" + str(self.fechainicio.month) + "-" + str(
+            self.fechainicio.year) + "\nMeses de duracion: " + str(
+            self.mesesduracion)
 
 
 # Base.metadata.drop_all(bind=engine)

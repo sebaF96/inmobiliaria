@@ -4,9 +4,10 @@ from modelos import Cliente, Inmueble, Alquiler
 from database import Session
 import time
 import os
+from datetime import datetime
 
 session = Session()
-opciones = ["Registrar cliente", "Añadir propiedad", "Registrar alquiler", "Ver alquileres", "Salir"]
+opciones = ["Registrar cliente", "Añadir propiedad", "Registrar alquiler", "Ver alquileres", "Borrar alquiler", "Salir"]
 
 
 def print_menu(stdscr, selected_row_idx):
@@ -106,6 +107,11 @@ def main(stdscr):
                     print(alquiler)
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
+
+          #  elif current_row_idx == 4:
+
+
+
 
             elif current_row_idx == len(opciones) - 1:
                 curses.endwin()
