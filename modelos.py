@@ -78,8 +78,7 @@ class Alquiler(Base):
     def __repr__(self):
         return 'Casa: ' + str(self.inmueble) + '\nInquilino:  ' + str(self.inquilino) + '\nDueño:  ' + str(
             self.inmueble.propietario) + "\nInicio de alquiler: " + str(
-            self.fechainicio.day) + "-" + str(self.fechainicio.month) + "-" + str(
-            self.fechainicio.year) + "\nMeses de duracion: " + str(
+            self.fechainicio.strftime("%d %B, %Y")) + "\nMeses de duracion: " + str(
             self.mesesduracion)
 
 
