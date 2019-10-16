@@ -51,11 +51,11 @@ pip install -r requeriments.txt
 ```
 vi .env
 ```
-Pegar lo siguiente en el archivo y completarlo con las confuguraciones de tu base de datos <br>
-export DB_CONECTION=Usuario:Contraseña<br>
+Pegar lo siguiente en el archivo y completarlo con las confuguraciones de tu base de datos <br><br>
+export DB_CONECTION=Tu_usuario:TuContraseña<br>
 export DB_SCHEMA=NombreDeTuBase<br>
-export DB_HOST=hostDeTuBASE
-<br>
+export DB_HOST=HostDeTuBase
+<br><br>
 Guardar el archivo
 <li> Ejecutar archivo main
 
