@@ -1,6 +1,7 @@
 from modelos import Cliente, Inmueble, Alquiler
 
-def AgregarPropiedad(duenioid):
+
+def agregar_propiedad(duenioid):
 
     propiedad = Inmueble()
 
@@ -15,7 +16,7 @@ def AgregarPropiedad(duenioid):
     return propiedad
 
 
-def AgregarCliente():
+def agregar_cliente():
 
     cliente = Cliente()
 
@@ -32,7 +33,7 @@ def AgregarCliente():
     return cliente
 
 
-def AgregarAlquiler(inquilino_id, inmueble_id):
+def agregar_alquiler(inquilino_id, inmueble_id):
     alquiler = Alquiler()
 
     alquiler.inquilinoId = inquilino_id
@@ -56,8 +57,4 @@ def BorrarAlquiler():
 
 
 def VenderCasa():
-    pass
-
-
-def ListarCasas():
     pass
