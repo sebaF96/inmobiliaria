@@ -61,7 +61,7 @@ def main(stdscr):
             os.system('clear')
 
             if current_row_idx == 0:    # Agregar cliente
-                cliente = AgregarCliente()
+                cliente = agregar_cliente()
                 if not cliente_existe(cliente.dni):
                     print("\nCliente añadido con exito!\n")
                     print(cliente)
@@ -86,7 +86,7 @@ def main(stdscr):
                 ownerdni = str(input("Ingrese el dni del dueño de la propiedad: "))
                 if cliente_existe(ownerdni):
                     cliente = session.query(Cliente).filter(Cliente.dni == ownerdni).one()
-                    inmueble = AgregarPropiedad(cliente.clienteId)
+                    inmueble = agregar_propiedad(cliente.clienteId)
                     print("Propiedad añadida con exito!\n")
                     print(inmueble)
                     session.add(inmueble)
@@ -110,7 +110,7 @@ def main(stdscr):
 
                     inmueble_id = int(input())
 
-                    alquiler = AgregarAlquiler(inquilino.clienteId, inmueble_id)
+                    alquiler = agregar_alquiler(inquilino.clienteId, inmueble_id)
 
                     session.add(alquiler)
 
@@ -156,6 +156,23 @@ def main(stdscr):
                 else:
                     print("\nCliente no encontrado")
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
+
+            elif current_row_idx == 6:  # Borrar alquiler
+                dni_inquilino = int(input("Igrese el DNI del inquilino: "))
+                alquiler = session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni_inquilino).one()
+                print(alquiler)
+                confirmacion = str(input("Seguro que desea borrar el alquiler? (s/n) "))
+                if confirmacion == 'S' or confirmacion == 's':
+                    alquiler.inmueble.alquilado = 0
+                    session.delete(alquiler)
+                    session.commit()
+                    print("Alquiler borrado con exito")
+                    time.sleep(2)
+
+            elif current_row_idx == 7:  # Borras propiedad
+                pass
+            elif current_row_idx == 8:  # Modificar cliente
+                pass
 
             elif current_row_idx == len(opciones) - 1:  # Salir
                 print("Hasta luego!")
