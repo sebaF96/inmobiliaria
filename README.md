@@ -20,7 +20,7 @@ agregar, modificar, y llevar cuenta de distintas propiedades clientes y alquiler
 <hr>
 
 <h4> Como ejecutar? </h4>
-<h5> Requisitos <h5>
+<h5> Requisitos </h5>
 <ul>
 <li> Sistema operativo Linux (por ahora)
 <li> Tener instalado Python 3
