@@ -29,7 +29,7 @@ agregar, modificar, y llevar cuenta de distintas propiedades clientes y alquiler
 <h5> Pasos </h5>
 <ul>
 
-<li> Crear entorno virtual. Dentro del directorio del proyecto ejecutar
+<li> :wrench: Crear entorno virtual. Dentro del directorio del proyecto ejecutar
     
 ```
 python3 -m venv .
@@ -40,19 +40,23 @@ python3 -m venv .
 ```
 source bin/activate
 ```
-<li> Instalar requerimientos. Con el entorno activado ejecutar
+<li> :wrench: Instalar requerimientos. Con el entorno activado ejecutar
 
 ```
 pip install -r requeriments.txt
 ```
 
-<li> Modificar archivo .env con la configuracion de tu base de datos MySQL
+<li> :wrench: Crear archivo .env con la configuracion de tu base de datos MySQL
 
 ```
 vi .env
 ```
-En cada linea de clave, igualar al valor correspondiente y luego guardar el archivo
-
+Pegar lo siguiente en el archivo y completarlo con las confuguraciones de tu base de datos <br>
+export DB_CONECTION=Usuario:Contraseña
+export DB_SCHEMA=NombreDeTuBase
+export DB_HOST=hostDeTuBASE
+<br>
+Guardar el archivo
 <li> Ejecutar archivo main
 
 ```
@@ -62,4 +66,4 @@ python3 main.py
 
 </ul> 
 
-
+Los pasos que contienen  :wrench: son de configuracion y solo tendras que llevarlos a cabo la primera vez
