@@ -128,10 +128,13 @@ def main(stdscr):
 
             elif current_row_idx == 5:
                 dni = int(input("Ingrese el DNI del cliente "))
-                cliente = session.query(Cliente).filter(Cliente.dni == dni).one()
-                mostrar_cliente(cliente)
-                alquiler = session.query(Alquiler).filter(Alquiler.inquilino == cliente).one()
-                print("Alquilando: " + str(alquiler.inmueble))
+                if session.query(Cliente).filter(Cliente.dni == dni).count() == 1:
+                    cliente = session.query(Cliente).filter(Cliente.dni == dni).one()
+                    mostrar_cliente(cliente)
+                    alquiler = session.query(Alquiler).filter(Alquiler.inquilino == cliente).one()
+                    print("Alquilando: " + str(alquiler.inmueble))
+                else:
+                    print("\nCliente no encontrado")
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
             elif current_row_idx == len(opciones) - 1:
