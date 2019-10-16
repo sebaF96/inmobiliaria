@@ -46,6 +46,13 @@ source bin/activate
 pip install -r requeriments.txt
 ```
 
+<li> Modificar archivo .env con la configuracion de tu base de datos MySQL
+
+```
+vi .env
+```
+En cada linea de clave, igualar al valor correspondiente y luego guardar el archivo
+
 <li> Ejecutar archivo main
 
 ```
