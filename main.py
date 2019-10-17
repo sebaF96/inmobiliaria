@@ -37,7 +37,7 @@ def cliente_existe(dni):
 
 
 def main(stdscr):
-    global alquileres
+   # global alquileres
     curses.curs_set(0)
     curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
@@ -122,6 +122,7 @@ def main(stdscr):
                     session.commit()
                 else:
                     print("No existe cliente de DNI " + str(dni_inquilino))
+                    time.sleep(2)
 
             elif current_row_idx == 4:  # Listar alquileres
                 print("1. DNI dueño\n2. DNI inquilino\n3. Todos")
