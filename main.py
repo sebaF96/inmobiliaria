@@ -2,7 +2,7 @@ import curses
 from funciones import *
 from modelos import Cliente, Inmueble, Alquiler
 from database import Session, Base
-from sqlalchemy import or_
+from sqlalchemy import exc
 import time
 import os
 from datetime import datetime
@@ -109,20 +109,20 @@ def main(stdscr):
                         print(casa.inmuebleId, casa)
 
                     inmueble_id = int(input())
+                    try:
+                        alquiler = agregar_alquiler(inquilino.clienteId, inmueble_id)
+                        session.add(alquiler)
+                        casa = session.query(Inmueble).filter(Inmueble.inmuebleId == inmueble_id).one()
+                        casa.alquilado = 1
+                        session.commit()
+                        print("\nAlquiler registrado con exito!")
 
-                    alquiler = agregar_alquiler(inquilino.clienteId, inmueble_id)
-
-                    session.add(alquiler)
-
-                    print("\nAlquiler registrado con exito!")
-
-                    casa = session.query(Inmueble).filter(Inmueble.inmuebleId == inmueble_id).one()
-                    casa.alquilado = 1
-
-                    session.commit()
+                    except exc.SQLAlchemyError:
+                        print("Numero de propiedad incorrecto")
                 else:
                     print("No existe cliente de DNI " + str(dni_inquilino))
-                    time.sleep(2)
+
+                time.sleep(2)
 
             elif current_row_idx == 4:  # Listar alquileres
                 print("1. DNI dueño\n2. DNI inquilino\n3. Todos")
@@ -171,7 +171,31 @@ def main(stdscr):
                     time.sleep(2)
 
             elif current_row_idx == 7:  # Borras propiedad
-                pass
+                ownerdni = int(input("Ingrese el DNI del dueño "))
+                if cliente_existe(ownerdni):
+                    propiedades = session.query(Inmueble).join(Cliente).filter(Inmueble.alquilado == 0,
+                                                                       Cliente.dni == ownerdni).order_by(
+                        Inmueble.inmuebleId).all()
+
+                    for casa in propiedades:
+                        print(casa.inmuebleId, casa)
+
+                    propiedad_id = int(input("\n\nSeleccione la propiedad a eliminar "))
+                    try:
+                        propiedad = session.query(Inmueble).filter(Inmueble.inmuebleId == propiedad_id).one()
+                        print(propiedad)
+                        confirmacion = str(input("\nSeguro que desea borrar esta propiedad? (s/n)"))
+                        if confirmacion == 'S' or confirmacion == 's':
+                            session.delete(propiedad)
+                            session.commit()
+                            print("Propiedad borrada con exito")
+                            time.sleep(2)
+                    except exc.SQLAlchemyError:
+                        print("Seleccion incorrecta")
+                else:
+                    print("El cliente no existe")
+                time.sleep(2)
+
             elif current_row_idx == 8:  # Modificar cliente
                 pass
 
