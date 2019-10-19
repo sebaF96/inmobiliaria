@@ -37,12 +37,9 @@ def cliente_existe(dni):
 
 
 def main(stdscr):
-   # global alquileres
     curses.curs_set(0)
     curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
-
     current_row_idx = 0
-
     print_menu(stdscr, current_row_idx)
 
     while 1:
@@ -101,7 +98,6 @@ def main(stdscr):
                     inquilino = session.query(Cliente).filter(Cliente.dni == dni_inquilino).one()
 
                     print("Ingrese el numero de propiedad: ")
-
                     casas_disponibles = session.query(Inmueble).filter(Inmueble.alquilado == 0).order_by(
                         Inmueble.inmuebleId).all()
 
@@ -160,15 +156,18 @@ def main(stdscr):
 
             elif current_row_idx == 6:  # Borrar alquiler
                 dni_inquilino = int(input("Igrese el DNI del inquilino: "))
-                alquiler = session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni_inquilino).one()
-                print(alquiler)
-                confirmacion = str(input("Seguro que desea borrar el alquiler? (s/n) "))
-                if confirmacion == 'S' or confirmacion == 's':
-                    alquiler.inmueble.alquilado = 0
-                    session.delete(alquiler)
-                    session.commit()
-                    print("Alquiler borrado con exito")
-                    time.sleep(2)
+                try:
+                    alquiler = session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni_inquilino).one()
+                    print(alquiler)
+                    confirmacion = str(input("Seguro que desea borrar el alquiler? (s/n) "))
+                    if confirmacion == 'S' or confirmacion == 's':
+                        alquiler.inmueble.alquilado = 0
+                        session.delete(alquiler)
+                        session.commit()
+                        print("Alquiler borrado con exito")
+                except exc.SQLAlchemyError:
+                    print("Este cliente no esta alquilando ninguna propiedad")
+                time.sleep(2)
 
             elif current_row_idx == 7:  # Borras propiedad
                 ownerdni = int(input("Ingrese el DNI del dueño "))
