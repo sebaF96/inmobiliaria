@@ -96,25 +96,27 @@ def main(stdscr):
                 dni_inquilino = str(input("Ingrese DNI del inquilino: "))
                 if cliente_existe(dni_inquilino):
                     inquilino = session.query(Cliente).filter(Cliente.dni == dni_inquilino).one()
+                    if session.query(Alquiler).filter(Alquiler.inquilino == inquilino).count() == 0:
+                        print("Ingrese el numero de propiedad: ")
+                        casas_disponibles = session.query(Inmueble).filter(Inmueble.alquilado == 0).order_by(
+                            Inmueble.inmuebleId).all()
 
-                    print("Ingrese el numero de propiedad: ")
-                    casas_disponibles = session.query(Inmueble).filter(Inmueble.alquilado == 0).order_by(
-                        Inmueble.inmuebleId).all()
+                        for casa in casas_disponibles:
+                            print(casa.inmuebleId, casa)
 
-                    for casa in casas_disponibles:
-                        print(casa.inmuebleId, casa)
+                        inmueble_id = int(input())
+                        try:
+                            alquiler = agregar_alquiler(inquilino.clienteId, inmueble_id)
+                            session.add(alquiler)
+                            casa = session.query(Inmueble).filter(Inmueble.inmuebleId == inmueble_id).one()
+                            casa.alquilado = 1
+                            session.commit()
+                            print("\nAlquiler registrado con exito!")
 
-                    inmueble_id = int(input())
-                    try:
-                        alquiler = agregar_alquiler(inquilino.clienteId, inmueble_id)
-                        session.add(alquiler)
-                        casa = session.query(Inmueble).filter(Inmueble.inmuebleId == inmueble_id).one()
-                        casa.alquilado = 1
-                        session.commit()
-                        print("\nAlquiler registrado con exito!")
-
-                    except exc.SQLAlchemyError:
-                        print("Numero de propiedad incorrecto")
+                        except exc.SQLAlchemyError:
+                            print("Numero de propiedad incorrecto")
+                    else:
+                        print("Este cliente ya esta alquilando una propiedad.")
                 else:
                     print("No existe cliente de DNI " + str(dni_inquilino))
 
