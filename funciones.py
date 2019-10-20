@@ -2,7 +2,7 @@ from modelos import Cliente, Inmueble, Alquiler
 import curses
 
 opciones = ["Registrar cliente", "Listar propiedades", "Añadir propiedad", "Registrar alquiler", "Ver alquileres",
-            "Ver clientes", "Borrar alquiler", "Borrar propiedad", "Registrar pago", "Salir"]
+            "Ver clientes", "Borrar alquiler", "Borrar propiedad", "Registrar pago", "Imprimir propiedades", "Salir"]
 
 
 def print_menu(stdscr, selected_row_idx):
@@ -81,3 +81,17 @@ def registrar_pago(Inmueble):
     if confirmacion != 's' and confirmacion != 'S':
         meses = 0
     return meses
+
+
+def imprimir_casas(casas_disponibles):
+    file = open("Casas_disponibles.txt", "w")
+
+    for casa in casas_disponibles:
+        contenido = '📍️ Ubicacion: ' + str(casa.ubicacion) + '\n🛏️ Habitaciones: ' + str(
+            casa.habitaciones) + '\n🚽️ Baños: ' + str(casa.banios) + '\n🏘️ Zona: ' + str(
+            casa.zona) + '\n📏️ Tamaño: ' + str(casa.tamanio) + '\n💰️ Precio: $' + str(
+            casa.precio) + '\n--------------------------------------------------------\n'
+        file.write(contenido)
+    file.close()
+
+

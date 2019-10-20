@@ -194,6 +194,12 @@ def main(stdscr):
                     print("Este cliente no existe o no esta alquilando ninguna propiedad")
                 time.sleep(2)
 
+            elif current_row_idx == 9:  # Imprimir
+                casas_disponibles = session.query(Inmueble).filter(Inmueble.alquilado == 0).order_by(
+                    Inmueble.precio).all()
+
+                imprimir_casas(casas_disponibles)
+
             elif current_row_idx == len(opciones) - 1:  # Salir
                 print("Hasta luego!")
                 for x in range(7):
