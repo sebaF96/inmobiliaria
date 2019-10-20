@@ -4,16 +4,23 @@
 agregar, modificar, y llevar cuenta de distintas propiedades clientes y alquileres. 
 </p>
 <hr>
+
+![MenuPreview](screenshots/preview.png)
+
 <h4> Recursos utilizados: </h3>
 <ul>
-<li> Python 3
-<li> MySQL
-<li> SQLAlchemy
-<li> curses
+    <li> <a href="https://www.python.org/">Python3</a> - Lenguaje de programacion
+    <li> <a href="https://www.mysql.com/">MySQL</a> - SGBD
+    <li> <a href="https://www.sqlalchemy.org/">SQLAlchemy</a> - ORM
+    <li> <a href="https://docs.python.org/3/howto/curses.html">curses</a> - Modulo para imprimir menu
 </ul>
 
 <hr>
 <h4> Diagrama de clases y EER </h4>
+
+![EER](screenshots/entidad_relacion.png)
+
+
 <br>
 <br>
 
