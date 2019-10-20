@@ -56,6 +56,7 @@ def main(stdscr):
                 for casa in casas_disponibles:
                     print("\n")
                     print(casa.inmuebleId, casa)
+                    print("Precio: $" + str(casa.precio))
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
@@ -85,6 +86,7 @@ def main(stdscr):
                         for casa in casas_disponibles:
                             print("\n")
                             print(casa.inmuebleId, casa)
+                            print("Precio: $" + str(casa.precio))
 
                         inmueble_id = int(input())
                         try:
@@ -179,8 +181,24 @@ def main(stdscr):
                     print("El cliente no existe")
                 time.sleep(2)
 
-            elif current_row_idx == 8:  # Modificar cliente
-                pass
+            elif current_row_idx == 8:  # Registrar pago
+                dni_inquilino = int(input("Ingrese el dni del inquilino: "))
+                if session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni_inquilino).count() == 1:
+                    alquiler = session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni_inquilino).one()
+                    meses = registrar_pago(alquiler.inmueble)
+                    if meses != 0:
+                        alquiler.mesespagados = alquiler.mesespagados + meses
+                        session.commit()
+                        print("Pago registrado con exito")
+                else:
+                    print("Este cliente no existe o no esta alquilando ninguna propiedad")
+                time.sleep(2)
+
+            elif current_row_idx == 9:  # Imprimir
+                casas_disponibles = session.query(Inmueble).filter(Inmueble.alquilado == 0).order_by(
+                    Inmueble.precio).all()
+
+                imprimir_casas(casas_disponibles)
 
             elif current_row_idx == len(opciones) - 1:  # Salir
                 print("Hasta luego!")

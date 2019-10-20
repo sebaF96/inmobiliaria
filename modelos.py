@@ -58,7 +58,7 @@ class Inmueble(Base):
 
     def __repr__(self):
         return str(self.ubicacion) + ', ' + str(self.habitaciones) + ' habitaciones, ' + str(
-            self.descripcion) + '\nPrecio: $' + str(self.precio)
+            self.descripcion)
 
 
 class Alquiler(Base):
