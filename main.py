@@ -1,32 +1,12 @@
-import curses
 from funciones import *
 from modelos import Cliente, Inmueble, Alquiler
-from database import Session, Base
+from database import Session
 from sqlalchemy import exc
 import time
 import os
-from datetime import datetime
+
 
 session = Session()
-opciones = ["Registrar cliente", "Listar propiedades", "Añadir propiedad", "Registrar alquiler", "Ver alquileres",
-            "Ver clientes", "Borrar alquiler", "Borrar propiedad", "Modificar cliente", "Salir"]
-
-
-def print_menu(stdscr, selected_row_idx):
-    stdscr.clear()
-    h, w = stdscr.getmaxyx()
-
-    for idx, row in enumerate(opciones):
-        x = w // 2 - len(row) // 2
-        y = h // 2 - len(opciones) // 2 + idx
-        if idx == selected_row_idx:
-            stdscr.attron(curses.color_pair(1))
-            stdscr.addstr(y, x, row)
-            stdscr.attroff(curses.color_pair(1))
-        else:
-            stdscr.addstr(y, x, row)
-
-    stdscr.refresh()
 
 
 def cliente_existe(dni):
@@ -74,6 +54,7 @@ def main(stdscr):
                     Inmueble.inmuebleId).all()
 
                 for casa in casas_disponibles:
+                    print("\n")
                     print(casa.inmuebleId, casa)
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
@@ -102,6 +83,7 @@ def main(stdscr):
                             Inmueble.inmuebleId).all()
 
                         for casa in casas_disponibles:
+                            print("\n")
                             print(casa.inmuebleId, casa)
 
                         inmueble_id = int(input())
