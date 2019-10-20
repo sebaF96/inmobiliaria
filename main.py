@@ -56,6 +56,7 @@ def main(stdscr):
                 for casa in casas_disponibles:
                     print("\n")
                     print(casa.inmuebleId, casa)
+                    print("Precio: $" + str(casa.precio))
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
@@ -85,6 +86,7 @@ def main(stdscr):
                         for casa in casas_disponibles:
                             print("\n")
                             print(casa.inmuebleId, casa)
+                            print("Precio: $" + str(casa.precio))
 
                         inmueble_id = int(input())
                         try:
