@@ -16,9 +16,15 @@ agregar, modificar, y llevar cuenta de distintas propiedades clientes y alquiler
 </ul>
 
 <hr>
-<h4> Diagrama de clases y EER </h4>
+<h4> Diagramas </h4>
+<p> Diagrama de entidad relacion </p>
 
-![EER](screenshots/entidad_relacion.png)
+![EER](screenshots/EER.png)
+
+<br>
+<p>Diagrama de clases</p>
+
+![CLASES](screenshots/clases.png)
 
 
 <br>
