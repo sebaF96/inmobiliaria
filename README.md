@@ -57,6 +57,12 @@ export DB_SCHEMA=NombreDeTuBase<br>
 export DB_HOST=HostDeTuBase
 <br><br>
 Guardar el archivo
+<li> :wrench: Ejecutar archivo de modelos para generar las tablas y relaciones en la base de datos
+
+```
+python3 modelos.py
+```
+    
 <li> Ejecutar archivo main
 
 ```
