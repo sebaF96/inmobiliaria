@@ -2,7 +2,7 @@ from modelos import Cliente, Inmueble, Alquiler
 import curses
 
 opciones = ["Registrar cliente", "Listar propiedades", "Añadir propiedad", "Registrar alquiler", "Ver alquileres",
-            "Ver clientes", "Borrar alquiler", "Borrar propiedad", "Modificar cliente", "Salir"]
+            "Ver clientes", "Borrar alquiler", "Borrar propiedad", "Registrar pago", "Salir"]
 
 
 def print_menu(stdscr, selected_row_idx):
@@ -73,3 +73,11 @@ def mostrar_cliente(cliente):
     for propiedad in cliente.propiedades:
         print(propiedad)
 
+
+def registrar_pago(Inmueble):
+    meses = int(input("Cantidad de meses a pagar: "))
+    print("\nUsted pagara "+str(meses) + "meses por una suma de $" + str(Inmueble.precio * meses))
+    confirmacion = str(input("Confirmar operacion? (S/N)\n"))
+    if confirmacion != 's' and confirmacion != 'S':
+        meses = 0
+    return meses
