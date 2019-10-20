@@ -9,5 +9,4 @@ load_dotenv(override=True)
 
 Base = declarative_base()
 engine = create_engine('mysql+pymysql://'+os.getenv('DB_CONECTION')+'@'+os.getenv('DB_HOST')+'/'+os.getenv('DB_SCHEMA'))
-# Base.metadata.create_all(bind=engine)
 Session = sessionmaker(bind=engine)

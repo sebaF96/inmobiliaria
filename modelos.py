@@ -54,8 +54,11 @@ class Inmueble(Base):
 
     alquiler = relationship('Alquiler', back_populates='inmueble')
 
+    precio = Column('precio', Integer, nullable=False, default=6000)
+
     def __repr__(self):
-        return str(self.ubicacion) + ', ' + str(self.habitaciones) + ' habitaciones, ' + str(self.descripcion)
+        return str(self.ubicacion) + ', ' + str(self.habitaciones) + ' habitaciones, ' + str(
+            self.descripcion) + '\nPrecio: $' + str(self.precio)
 
 
 class Alquiler(Base):
@@ -75,11 +78,13 @@ class Alquiler(Base):
 
     mesesduracion = Column('mesesduracion', Integer, nullable=False)
 
+    mesespagados = Column('mesespagados', Integer, nullable=False, default=1)
+
     def __repr__(self):
         return 'Casa: ' + str(self.inmueble) + '\nInquilino:  ' + str(self.inquilino) + '\nDueño:  ' + str(
             self.inmueble.propietario) + "\nInicio de alquiler: " + str(
             self.fechainicio.strftime("%d %B, %Y")) + "\nMeses de duracion: " + str(
-            self.mesesduracion)
+            self.mesesduracion) + '\nMeses pagados: ' + str(self.mesespagados)
 
 
 # Base.metadata.drop_all(bind=engine)
