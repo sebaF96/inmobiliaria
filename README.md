@@ -86,3 +86,19 @@ python3 main.py
 </ul> 
 
 Los pasos que contienen  :wrench: son de configuracion y solo tendras que llevarlos a cabo la primera vez
+
+<hr>
+
+<h4>Conclusion</h4>
+
+<p> Problemas con los que me encontre </p>
+<ul>
+    <li> Idea inicial
+    <li> Dependencia ciruclar
+    <li> Fechas
+</ul>
+<p> Aspectos positivos </p>
+<ul>
+    <li> git branch / git merge
+    <li> UML
+</ul>
