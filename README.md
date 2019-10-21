@@ -7,16 +7,16 @@ agregar, modificar, y llevar cuenta de distintas propiedades clientes y alquiler
 
 ![MenuPreview](screenshots/preview.png)
 
-<h4> Recursos utilizados: </h3>
+<h3> Recursos utilizados: </h3>
 <ul>
-    <li> <a href="https://www.python.org/">Python3</a> - Lenguaje de programacion
+    <li> <a href="https://www.python.org/">Python 3</a> - Lenguaje de programacion
     <li> <a href="https://www.mysql.com/">MySQL</a> - SGBD
     <li> <a href="https://www.sqlalchemy.org/">SQLAlchemy</a> - ORM
     <li> <a href="https://docs.python.org/3/howto/curses.html">curses</a> - Modulo para imprimir menu
 </ul>
 
 <hr>
-<h4> Diagramas </h4>
+<h3> Diagramas </h3>
 <p> Diagrama de entidad relacion </p>
 
 ![EER](screenshots/EER.png)
@@ -32,7 +32,7 @@ agregar, modificar, y llevar cuenta de distintas propiedades clientes y alquiler
 
 <hr>
 
-<h4> Como ejecutar? </h4>
+<h3> Como ejecutar? </h3>
 <h5> Requisitos </h5>
 <ul>
 <li> Sistema operativo Linux (por ahora)
@@ -89,16 +89,22 @@ Los pasos que contienen  :wrench: son de configuracion y solo tendras que llevar
 
 <hr>
 
-<h4>Conclusion</h4>
+<h3>Conclusion</h3>
 
-<p> Problemas con los que me encontre </p>
+<p> Problemas con los que me encontre :x:</p>
 <ul>
     <li> Idea inicial
     <li> Dependencia ciruclar
     <li> Fechas
 </ul>
-<p> Aspectos positivos </p>
+<p> Aspectos positivos :heavy_check_mark:</p>
 <ul>
     <li> git branch / git merge
     <li> UML
+</ul>
+
+<p> Reconocimientos :recycle: </p>
+<ul>
+    <li> <a href="https://github.com/nikhilkumarsingh"> Nikhil Kumar Singh </a>
+    <li> <a href="https://pythonista.io/cursos/py121/introduccion-a-sql-alchemy"> Pythonista.io </a>
 </ul>
