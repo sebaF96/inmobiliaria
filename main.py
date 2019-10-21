@@ -1,6 +1,8 @@
 from funciones import *
-from modelos import Cliente, Inmueble, Alquiler
-from database import Session
+from Cliente import Cliente
+from Inmueble import Inmueble
+from Alquiler import Alquiler
+from db_config import Session
 from sqlalchemy import exc
 import time
 import os
@@ -30,7 +32,7 @@ def main(stdscr):
 
         if key == curses.KEY_UP and current_row_idx > 0:
             current_row_idx = current_row_idx - 1
-        elif key == curses.KEY_DOWN and current_row_idx < len(opciones) - 1:
+        elif key == curses.KEY_DOWN and current_row_idx < len(opciones_menu) - 1:
             current_row_idx = current_row_idx + 1
         elif key == curses.KEY_ENTER or key in [10, 13]:
             stdscr.refresh()
@@ -200,7 +202,7 @@ def main(stdscr):
 
                 imprimir_casas(casas_disponibles)
 
-            elif current_row_idx == len(opciones) - 1:  # Salir
+            elif current_row_idx == len(opciones_menu) - 1:  # Salir
                 print("Hasta luego!")
                 for x in range(7):
                     time.sleep(0.2)
