@@ -33,3 +33,10 @@ class Inmueble(Base):
     def __repr__(self):
         return str(self.ubicacion) + ', ' + str(self.habitaciones) + ' habitaciones, ' + str(
             self.descripcion)
+
+    def mostrar_datos(self):
+        print("\n")
+        print(self.inmuebleId, self)
+        print(str(self.banios) + " baños")
+        print("Precio: $" + str(self.precio))
+        print("Dueño:", self.propietario)

@@ -1,21 +1,7 @@
 from funciones import *
-from Cliente import Cliente
-from Inmueble import Inmueble
-from Alquiler import Alquiler
-from db_config import Session
-from sqlalchemy import exc
+from consultas import *
 import time
 import os
-
-
-session = Session()
-
-
-def cliente_existe(dni):
-    aux = False
-    if session.query(Cliente).filter(Cliente.dni == dni).count() == 1:
-        aux = True
-    return aux
 
 
 def main(stdscr):
@@ -42,38 +28,31 @@ def main(stdscr):
             if current_row_idx == 0:    # Agregar cliente
                 cliente = agregar_cliente()
                 if not cliente_existe(cliente.dni):
-                    print("\nCliente añadido con exito!\n")
-                    print(cliente)
-                    session.add(cliente)
-                    session.commit()
+                    print("\nCliente añadido con exito!\n", cliente)
+                    insert_in_db(cliente)
                 else:
                     print("\nEl cliente que esta intentando añadir ya existe")
                 time.sleep(2)
 
             elif current_row_idx == 1:  # Listar propiedades
 
-                casas_disponibles = session.query(Inmueble).filter(Inmueble.alquilado == 0).order_by(
-                    Inmueble.inmuebleId).all()
+                casas_disponibles = listar_propiedades()
 
                 for casa in casas_disponibles:
-                    print("\n")
-                    print(casa.inmuebleId, casa)
-                    print("Precio: $" + str(casa.precio))
+                    casa.mostrar_datos()
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
             elif current_row_idx == 2:  # Agregar propiedad
 
-                ownerdni = str(input("Ingrese el dni del dueño de la propiedad: "))
-                if cliente_existe(ownerdni):
-                    cliente = session.query(Cliente).filter(Cliente.dni == ownerdni).one()
+                print("Ingrese el dni del dueño de la propiedad\n")
+                cliente = get_cliente()
+                try:
                     inmueble = agregar_propiedad(cliente.clienteId)
-                    print("Propiedad añadida con exito!\n")
-                    print(inmueble)
-                    session.add(inmueble)
-                    session.commit()
-                else:
-                    print("No hay un cliente de dni " + str(ownerdni))
+                    insert_in_db(inmueble)
+                except AttributeError:
+                    pass
+
                 time.sleep(3)
 
             elif current_row_idx == 3:  # Registrar alquiler

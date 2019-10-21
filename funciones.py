@@ -26,7 +26,6 @@ def print_menu(stdscr, selected_row_idx):
 
 
 def agregar_propiedad(duenioid):
-
     propiedad = Inmueble()
 
     propiedad.ubicacion = str(input("Ubicacion: "))
@@ -38,7 +37,6 @@ def agregar_propiedad(duenioid):
     propiedad.propietarioId = duenioid
 
     return propiedad
-
 
 def agregar_cliente():
 
