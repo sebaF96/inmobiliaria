@@ -1,4 +1,4 @@
-<h1>Inmobiliaria de alquileres</h1>
+<h1>Inmobiliaria de alquileres :house_with_garden:</h1>
 <h3> Universidad de Mendoza</h3>
 <p> Pequeño software de administracion de inmobiliaria de alquileres, con el cual podremos 
 agregar, modificar, y llevar cuenta de distintas propiedades clientes y alquileres. 
