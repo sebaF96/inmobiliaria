@@ -77,7 +77,7 @@ def agregar_propiedad(duenioid):
     propiedad.propietarioId = duenioid
 
     insert_in_db(propiedad)
-    print("\n Propiedad añadida con exito!")
+    print("\nPropiedad añadida con exito!")
 
 
 def agregar_alquiler(inquilino_id, inmueble_id):

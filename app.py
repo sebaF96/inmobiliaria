@@ -115,10 +115,10 @@ def main(stdscr):
                 time.sleep(3)
 
             elif current_row_idx == 9:  # Imprimir
-                casas_disponibles = session.query(Inmueble).filter(Inmueble.alquilado == 0).order_by(
-                    Inmueble.precio).all()
-
+                casas_disponibles = listar_propiedades()
                 imprimir_casas(casas_disponibles)
+                print("Archivo generado con exito!")
+                time.sleep(3)
 
             elif current_row_idx == len(opciones_menu) - 1:  # Salir
                 print("Hasta luego!")
