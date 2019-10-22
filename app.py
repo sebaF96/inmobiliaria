@@ -1,5 +1,5 @@
+from menu_config import *
 from funciones import *
-from consultas import *
 import time
 import os
 
@@ -33,7 +33,8 @@ def main(stdscr):
 
             elif current_row_idx == 1:  # Listar propiedades
 
-                listar_propiedades()
+                for casa in listar_propiedades():
+                    casa.mostrar_datos()
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
@@ -51,7 +52,9 @@ def main(stdscr):
                 inquilino = get_cliente()
 
                 if cliente_existe(inquilino):
-                    listar_propiedades()
+                    for casa in listar_propiedades():
+                        casa.mostrar_datos()
+
                     inmueble_id = int(input("\nIngrese el numero de propiedad: "))
                     agregar_alquiler(inquilino.clienteId, inmueble_id)
 
@@ -65,7 +68,8 @@ def main(stdscr):
                 else:
                     cliente = 0
 
-                listar_alquileres(cliente, choice)
+                for alquiler in listar_alquileres(cliente, choice):
+                    print(alquiler)
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
