@@ -181,9 +181,12 @@ def imprimir_casas(casas_disponibles):
     file = open("Casas_disponibles.txt", "w")
 
     for casa in casas_disponibles:
-        contenido = '📍️ Ubicacion: ' + str(casa.ubicacion) + '\n🛏️ Habitaciones: ' + str(
-            casa.habitaciones) + '\n🚽️ Baños: ' + str(casa.banios) + '\n🏘️ Zona: ' + str(
-            casa.zona) + '\n📏️ Tamaño: ' + str(casa.tamanio) + '\n💰️ Precio: $' + str(
-            casa.precio) + '\n--------------------------------------------------------\n'
-        file.write(contenido)
+        file.write('📍️ Ubicacion: ' + str(casa.ubicacion))
+        file.write('\n🛏️ Habitaciones: ' + str(casa.habitaciones))
+        file.write('\n🚽️ Baños: ' + str(casa.banios))
+        file.write('\n🏘️ Zona: ' + str(casa.zona))
+        file.write('\n📏️ Tamaño: ' + str(casa.tamanio))
+        file.write('\n💰️ Precio: $' + str(casa.precio))
+        file.write('\n--------------------------------------------------------\n')
+
     file.close()
