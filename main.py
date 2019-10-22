@@ -76,31 +76,23 @@ def main(stdscr):
                         cliente.mostrar_datos()
                     else:
                         print("Cliente no encontrado")
-                elif choice == 1:
+                elif choice == 2:
                     listar_clientes()
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
             elif current_row_idx == 6:  # Borrar alquiler
-                dni_inquilino = int(input("Igrese el DNI del inquilino: "))
-                try:
-                    alquiler = session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni_inquilino).one()
-                    print(alquiler)
-                    confirmacion = str(input("Seguro que desea borrar el alquiler? (s/n) "))
-                    if confirmacion == 'S' or confirmacion == 's':
-                        alquiler.inmueble.alquilado = 0
-                        session.delete(alquiler)
-                        session.commit()
-                        print("Alquiler borrado con exito")
-                except exc.SQLAlchemyError:
-                    print("Este cliente no esta alquilando ninguna propiedad")
+                print("Ingrese el dni del inquilino")
+                inquilino = get_cliente()
+                borrar_alquiler(inquilino)
+
                 time.sleep(2)
 
             elif current_row_idx == 7:  # Borras propiedad
                 ownerdni = int(input("Ingrese el DNI del dueño "))
                 if cliente_existe(ownerdni):
                     propiedades = session.query(Inmueble).join(Cliente).filter(Inmueble.alquilado == 0,
-                                                                       Cliente.dni == ownerdni).order_by(
+                                                                               Cliente.dni == ownerdni).order_by(
                         Inmueble.inmuebleId).all()
 
                     for casa in propiedades:

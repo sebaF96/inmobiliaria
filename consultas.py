@@ -3,6 +3,7 @@ from Cliente import Cliente
 from Alquiler import Alquiler
 from Inmueble import Inmueble
 from sqlalchemy import exc
+import os
 
 session = Session()
 
@@ -98,17 +99,44 @@ def agregar_alquiler(inquilino_id, inmueble_id):
 
 
 def listar_alquileres(cliente, args):
-
-    global alquileres
+    alquileres = []
     if args == 3:
         alquileres = session.query(Alquiler).order_by(Alquiler.fechainicio).all()
 
-    elif args == 2:
+    elif args == 1 and cliente_existe(cliente):
         alquileres = session.query(Alquiler).join(Inmueble).join(Cliente).filter(Cliente.dni == cliente.dni).all()
 
-    elif args == 1:
+    elif args == 2 and cliente_existe(cliente):
         alquileres = session.query(Alquiler).join(Cliente).filter(Cliente.dni == cliente.dni).all()
 
     for alquiler in alquileres:
         print("\n")
+        print(str(alquiler.alquilerId) + ')')
         print(alquiler)
+
+
+def borrar_alquiler(cliente):
+    if cliente_existe(cliente):
+        cantidad_alquileres = session.query(Alquiler).join(Cliente).filter(Cliente.dni == cliente.dni).count()
+        if cantidad_alquileres == 1:
+            alquiler = session.query(Alquiler).join(Cliente).filter(Cliente.dni == cliente.dni).one()
+            print(alquiler)
+            confirmar_borrado = True
+
+        elif cantidad_alquileres > 1:
+            listar_alquileres(cliente, 2)
+            eleccion = int(input("Seleccione el alquiler que desea borrar: "))
+            os.system('clear')
+            alquiler = session.query(Alquiler).filter(Alquiler.alquilerId == eleccion).one()
+            print(alquiler)
+            confirmar_borrado = True
+        else:
+            confirmar_borrado = False
+            print("Este cliente no esta alquilando ninguna propiedad")
+
+        if confirmar_borrado is True:
+            confirmacion = str(input("Seguro que desea borrar el alquiler? (s/n) "))
+            if confirmacion == 'S' or confirmacion == 's':
+                alquiler.inmueble.alquilado = 0
+                delete_from_db(alquiler)
+                print("Alquiler borrado con exito")

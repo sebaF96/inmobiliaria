@@ -1,6 +1,3 @@
-from Cliente import Cliente
-from Alquiler import Alquiler
-from Inmueble import Inmueble
 import curses
 
 opciones_menu = ["Registrar cliente", "Listar propiedades", "Añadir propiedad", "Registrar alquiler", "Ver alquileres",
