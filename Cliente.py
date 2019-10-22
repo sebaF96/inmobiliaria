@@ -1,12 +1,13 @@
 from db_config import Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Cliente(Base):
     __tablename__ = 'cliente'
 
-    clienteId = Column('clienteId', Integer, primary_key=True)
+    __clienteId = Column('clienteId', Integer, primary_key=True)
 
     nombre = Column('nombre', String(70), nullable=False)
 
@@ -23,6 +24,14 @@ class Cliente(Base):
     propiedades = relationship('Inmueble', back_populates="propietario")
 
     alquilando = relationship('Alquiler', back_populates="inquilino")
+
+    @hybrid_property
+    def clienteId(self):
+        return self.__clienteId
+
+    @clienteId.setter
+    def clienteId(self, value):
+        self.__clienteId = value
 
     def mostrar_datos(self):
         print(self)

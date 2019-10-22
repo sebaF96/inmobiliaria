@@ -69,6 +69,7 @@ def main(stdscr):
                     cliente = 0
 
                 for alquiler in listar_alquileres(cliente, choice):
+                    print("\n")
                     print(alquiler)
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
