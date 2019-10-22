@@ -141,6 +141,25 @@ def borrar_alquiler(cliente):
                 print("Alquiler borrado con exito")
 
 
+def borrar_propiedad(cliente):
+    propiedades = session.query(Inmueble).filter(Inmueble.alquilado == 0, Inmueble.propietario == cliente).all()
+    for casa in propiedades:
+        casa.mostrar_datos()
+
+    propiedad_id = int(input("\n\nSeleccione la propiedad a eliminar "))
+    try:
+        propiedad = session.query(Inmueble).filter(Inmueble.inmuebleId == propiedad_id).one()
+        os.system('clear')
+        propiedad.mostrar_datos()
+        confirmacion = str(input("\nSeguro que desea borrar esta propiedad? (s/n)"))
+        if confirmacion == 'S' or confirmacion == 's':
+            delete_from_db(propiedad)
+            print("\nPropiedad borrada con exito!")
+    except exc.SQLAlchemyError:
+        print("\nSeleccion de propiedad incorrecta. Reintente")
+
+
+
 def registrar_pago(Inmueble):
     meses = int(input("Cantidad de meses a pagar: "))
     print("\nUsted pagara "+str(meses) + "meses por una suma de $" + str(Inmueble.precio * meses))

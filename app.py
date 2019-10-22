@@ -58,7 +58,7 @@ def main(stdscr):
                     inmueble_id = int(input("\nIngrese el numero de propiedad: "))
                     agregar_alquiler(inquilino.clienteId, inmueble_id)
 
-                time.sleep(2)
+                time.sleep(3)
 
             elif current_row_idx == 4:  # Listar alquileres
                 choice = int(input("1. DNI dueño\n2. DNI inquilino\n3. Todos\n"))
@@ -91,33 +91,15 @@ def main(stdscr):
                 inquilino = get_cliente()
                 borrar_alquiler(inquilino)
 
-                time.sleep(2)
+                time.sleep(3)
 
             elif current_row_idx == 7:  # Borras propiedad
-                ownerdni = int(input("Ingrese el DNI del dueño "))
-                if cliente_existe(ownerdni):
-                    propiedades = session.query(Inmueble).join(Cliente).filter(Inmueble.alquilado == 0,
-                                                                               Cliente.dni == ownerdni).order_by(
-                        Inmueble.inmuebleId).all()
+                print("Ingrese el dni del dueño")
+                cliente = get_cliente()
+                if cliente_existe(cliente):
+                    borrar_propiedad(cliente)
 
-                    for casa in propiedades:
-                        print(casa.inmuebleId, casa)
-
-                    propiedad_id = int(input("\n\nSeleccione la propiedad a eliminar "))
-                    try:
-                        propiedad = session.query(Inmueble).filter(Inmueble.inmuebleId == propiedad_id).one()
-                        print(propiedad)
-                        confirmacion = str(input("\nSeguro que desea borrar esta propiedad? (s/n)"))
-                        if confirmacion == 'S' or confirmacion == 's':
-                            session.delete(propiedad)
-                            session.commit()
-                            print("Propiedad borrada con exito")
-                            time.sleep(2)
-                    except exc.SQLAlchemyError:
-                        print("Seleccion incorrecta")
-                else:
-                    print("El cliente no existe")
-                time.sleep(2)
+                time.sleep(3)
 
             elif current_row_idx == 8:  # Registrar pago
                 dni_inquilino = int(input("Ingrese el dni del inquilino: "))
@@ -130,7 +112,7 @@ def main(stdscr):
                         print("Pago registrado con exito")
                 else:
                     print("Este cliente no existe o no esta alquilando ninguna propiedad")
-                time.sleep(2)
+                time.sleep(3)
 
             elif current_row_idx == 9:  # Imprimir
                 casas_disponibles = session.query(Inmueble).filter(Inmueble.alquilado == 0).order_by(
