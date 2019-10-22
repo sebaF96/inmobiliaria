@@ -27,7 +27,7 @@ def main(stdscr):
 
             if current_row_idx == 0:    # Agregar cliente
                 cliente = agregar_cliente()
-                if not cliente_existe(cliente.dni):
+                if not cliente_existe(cliente):
                     print("\nCliente añadido con exito!\n", cliente)
                     insert_in_db(cliente)
                 else:
@@ -36,10 +36,7 @@ def main(stdscr):
 
             elif current_row_idx == 1:  # Listar propiedades
 
-                casas_disponibles = listar_propiedades()
-
-                for casa in casas_disponibles:
-                    casa.mostrar_datos()
+                listar_propiedades()
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
@@ -47,63 +44,32 @@ def main(stdscr):
 
                 print("Ingrese el dni del dueño de la propiedad\n")
                 cliente = get_cliente()
-                try:
+                if cliente_existe(cliente):
                     inmueble = agregar_propiedad(cliente.clienteId)
                     insert_in_db(inmueble)
-                except AttributeError:
-                    pass
 
                 time.sleep(3)
 
             elif current_row_idx == 3:  # Registrar alquiler
-                dni_inquilino = str(input("Ingrese DNI del inquilino: "))
-                if cliente_existe(dni_inquilino):
-                    inquilino = session.query(Cliente).filter(Cliente.dni == dni_inquilino).one()
-                    if session.query(Alquiler).filter(Alquiler.inquilino == inquilino).count() == 0:
-                        print("Ingrese el numero de propiedad: ")
-                        casas_disponibles = session.query(Inmueble).filter(Inmueble.alquilado == 0).order_by(
-                            Inmueble.inmuebleId).all()
+                print("Ingrese DNI del inquilino")
+                inquilino = get_cliente()
 
-                        for casa in casas_disponibles:
-                            print("\n")
-                            print(casa.inmuebleId, casa)
-                            print("Precio: $" + str(casa.precio))
-
-                        inmueble_id = int(input())
-                        try:
-                            alquiler = agregar_alquiler(inquilino.clienteId, inmueble_id)
-                            session.add(alquiler)
-                            casa = session.query(Inmueble).filter(Inmueble.inmuebleId == inmueble_id).one()
-                            casa.alquilado = 1
-                            session.commit()
-                            print("\nAlquiler registrado con exito!")
-
-                        except exc.SQLAlchemyError:
-                            print("Numero de propiedad incorrecto")
-                    else:
-                        print("Este cliente ya esta alquilando una propiedad.")
-                else:
-                    print("No existe cliente de DNI " + str(dni_inquilino))
+                if cliente_existe(inquilino):
+                    listar_propiedades()
+                    inmueble_id = int(input("Ingrese el numero de propiedad: "))
+                    agregar_alquiler(inquilino.clienteId, inmueble_id)
 
                 time.sleep(2)
 
             elif current_row_idx == 4:  # Listar alquileres
-                print("1. DNI dueño\n2. DNI inquilino\n3. Todos")
-                choice = int(input())
-                if choice == 1:
-                    dni = int(input("Ingrese DNI de cliente "))
-                    alquileres = session.query(Alquiler).join(Inmueble).join(Cliente).filter(Cliente.dni == dni).all()
+                choice = int(input("1. DNI dueño\n2. DNI inquilino\n3. Todos\n"))
 
-                elif choice == 2:
-                    dni = int(input("Ingrese DNI del cliente "))
-                    alquileres = session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni).all()
+                if choice == 1 or choice == 2:
+                    cliente = get_cliente()
+                    listar_alquileres(cliente, choice)
 
-                elif choice == 3:
-                    alquileres = session.query(Alquiler).order_by(Alquiler.fechainicio).all()
-
-                for alquiler in alquileres:
-                    print("\n")
-                    print(alquiler)
+                else:
+                    listar_alquileres(1, choice)
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 

@@ -35,8 +35,10 @@ def agregar_propiedad(duenioid):
     propiedad.tamanio = str(input("Tamaño: "))
     propiedad.descripcion = str(input("Descripcion: "))
     propiedad.propietarioId = duenioid
+    print("\n Propiedad añadida con exito!")
 
     return propiedad
+
 
 def agregar_cliente():
 
@@ -53,16 +55,6 @@ def agregar_cliente():
     cliente.email = str(input("Email: "))
 
     return cliente
-
-
-def agregar_alquiler(inquilino_id, inmueble_id):
-    alquiler = Alquiler()
-
-    alquiler.inquilinoId = inquilino_id
-    alquiler.inmuebleId = inmueble_id
-    alquiler.mesesduracion = int(input("Meses de duracion: "))
-
-    return alquiler
 
 
 def mostrar_cliente(cliente):
