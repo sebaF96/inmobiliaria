@@ -9,29 +9,21 @@ class Cliente(Base):
 
     __clienteId = Column('clienteId', Integer, primary_key=True)
 
-    nombre = Column('nombre', String(70), nullable=False)
+    __nombre = Column('nombre', String(70), nullable=False)
 
-    apellido = Column('apellido', String(70), nullable=False)
+    __apellido = Column('apellido', String(70), nullable=False)
 
-    domicilio = Column('domicilio', String(100), nullable=False)
+    __domicilio = Column('domicilio', String(100), nullable=False)
 
-    telefono = Column('telefono', String(15), nullable=False)
+    __telefono = Column('telefono', String(15), nullable=False)
 
-    email = Column('email', String(70))
+    __email = Column('email', String(70))
 
-    dni = Column('dni', String(10), nullable=False)
+    __dni = Column('dni', String(10), nullable=False)
 
     propiedades = relationship('Inmueble', back_populates="propietario")
 
     alquilando = relationship('Alquiler', back_populates="inquilino")
-
-    @hybrid_property
-    def clienteId(self):
-        return self.__clienteId
-
-    @clienteId.setter
-    def clienteId(self, value):
-        self.__clienteId = value
 
     def mostrar_datos(self):
         print(self)
@@ -45,6 +37,61 @@ class Cliente(Base):
         for alquiler in self.alquilando:
             print(alquiler.inmueble)
 
+    @hybrid_property
+    def clienteId(self):
+        return self.__clienteId
+
+    @clienteId.setter
+    def clienteId(self, value):
+        self.__clienteId = value
+
+    @property
+    def nombre(self):
+        return self.__nombre
+
+    @nombre.setter
+    def nombre(self, value):
+        self.__nombre = value
+
+    @hybrid_property
+    def apellido(self):
+        return self.__apellido
+
+    @apellido.setter
+    def apellido(self, value):
+        self.__apellido = value
+
+    @property
+    def domicilio(self):
+        return self.__domicilio
+
+    @domicilio.setter
+    def domicilio(self, value):
+        self.__domicilio = value
+
+    @property
+    def telefono(self):
+        return self.__telefono
+
+    @telefono.setter
+    def telefono(self, value):
+        self.__telefono = value
+
+    @property
+    def email(self):
+        return self.__email
+
+    @email.setter
+    def email(self, value):
+        self.__email = value
+
+    @hybrid_property
+    def dni(self):
+        return self.__dni
+
+    @dni.setter
+    def dni(self, value):
+        self.__dni = value
+
     def __repr__(self):
         return str(self.nombre) + ' ' + str(self.apellido) + ' ' + str(self.dni)
-

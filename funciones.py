@@ -53,12 +53,20 @@ def agregar_cliente():
         print("\nEl cliente que esta intentando añadir ya existe")
 
 
-def listar_clientes():
-    clientes = session.query(Cliente).all()
+def listar_clientes(filtro):
+    lista_clientes = []
+    if filtro == 1:     # Filtrar por DNI
+        cliente = get_cliente()
+        if cliente_existe(cliente):
+            lista_clientes.append(cliente)
+    elif filtro == 2:
+        apellido = str(input("Apellido: "))
+        lista_clientes = session.query(Cliente).filter(Cliente.apellido.ilike('%'+apellido+'%')).all()
 
-    for cliente in clientes:
-        print("\n")
-        cliente.mostrar_datos()
+    elif filtro == 3:
+        lista_clientes = session.query(Cliente).all()
+
+    return lista_clientes
 
 
 def listar_propiedades():

@@ -12,15 +12,17 @@ def main(stdscr):
     print_menu(stdscr, current_row_idx)
 
     while 1:
-
         key = stdscr.getch()
-
         stdscr.clear()
 
         if key == curses.KEY_UP and current_row_idx > 0:
             current_row_idx = current_row_idx - 1
         elif key == curses.KEY_DOWN and current_row_idx < len(opciones_menu) - 1:
             current_row_idx = current_row_idx + 1
+        elif key == curses.KEY_RIGHT:
+            current_row_idx = len(opciones_menu) - 1
+        elif key == curses.KEY_LEFT:
+            current_row_idx = 0
         elif key == curses.KEY_ENTER or key in [10, 13]:
             stdscr.refresh()
             curses.endwin()
@@ -75,15 +77,10 @@ def main(stdscr):
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
             elif current_row_idx == 5:  # Ver cliente
-                choice = int(input("1. Filtrar por DNI\n2. Todos\n"))
-                if choice == 1:
-                    cliente = get_cliente()
-                    if cliente_existe(cliente):
-                        cliente.mostrar_datos()
-                    else:
-                        print("Cliente no encontrado")
-                elif choice == 2:
-                    listar_clientes()
+                choice = int(input("1. Filtrar por DNI\n2. Filtrar por apellido\n3. Todos"))
+                for cliente in listar_clientes(choice):
+                    print("\n")
+                    cliente.mostrar_datos()
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
