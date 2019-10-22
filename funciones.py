@@ -25,48 +25,6 @@ def print_menu(stdscr, selected_row_idx):
     stdscr.refresh()
 
 
-def agregar_propiedad(duenioid):
-    propiedad = Inmueble()
-
-    propiedad.ubicacion = str(input("Ubicacion: "))
-    propiedad.habitaciones = int(input("Cantidad de habitaciones: "))
-    propiedad.banios = int(input("Cantidad de baños: "))
-    propiedad.zona = str(input("Zona: "))
-    propiedad.tamanio = str(input("Tamaño: "))
-    propiedad.descripcion = str(input("Descripcion: "))
-    propiedad.propietarioId = duenioid
-    print("\n Propiedad añadida con exito!")
-
-    return propiedad
-
-
-def agregar_cliente():
-
-    cliente = Cliente()
-
-    cliente.dni = str(input("DNI: "))
-    cliente.nombre = str(input("Nombre: "))
-    cliente.apellido = str(input("Apellido: "))
-    try:
-        cliente.telefono = int(input("Telefono: "))
-    except ValueError:
-        print("El telefono no puede contener letras, reintente")
-    cliente.domicilio = str(input("Domicilio: "))
-    cliente.email = str(input("Email: "))
-
-    return cliente
-
-
-def mostrar_cliente(cliente):
-    print(cliente)
-    print("Telefono: " + str(cliente.telefono))
-    print("Domicilio: " + str(cliente.domicilio))
-    print("Email: " + str(cliente.email))
-    print("Dueño de: ")
-    for propiedad in cliente.propiedades:
-        print(propiedad)
-
-
 def registrar_pago(Inmueble):
     meses = int(input("Cantidad de meses a pagar: "))
     print("\nUsted pagara "+str(meses) + "meses por una suma de $" + str(Inmueble.precio * meses))

@@ -25,14 +25,10 @@ def main(stdscr):
             curses.endwin()
             os.system('clear')
 
-            if current_row_idx == 0:    # Agregar cliente
-                cliente = agregar_cliente()
-                if not cliente_existe(cliente):
-                    print("\nCliente añadido con exito!\n", cliente)
-                    insert_in_db(cliente)
-                else:
-                    print("\nEl cliente que esta intentando añadir ya existe")
-                time.sleep(2)
+            if current_row_idx == 0:  # Agregar cliente
+
+                agregar_cliente()
+                time.sleep(3)
 
             elif current_row_idx == 1:  # Listar propiedades
 
@@ -45,8 +41,7 @@ def main(stdscr):
                 print("Ingrese el dni del dueño de la propiedad\n")
                 cliente = get_cliente()
                 if cliente_existe(cliente):
-                    inmueble = agregar_propiedad(cliente.clienteId)
-                    insert_in_db(inmueble)
+                    agregar_propiedad(cliente.clienteId)
 
                 time.sleep(3)
 
@@ -56,7 +51,7 @@ def main(stdscr):
 
                 if cliente_existe(inquilino):
                     listar_propiedades()
-                    inmueble_id = int(input("Ingrese el numero de propiedad: "))
+                    inmueble_id = int(input("\nIngrese el numero de propiedad: "))
                     agregar_alquiler(inquilino.clienteId, inmueble_id)
 
                 time.sleep(2)
@@ -66,25 +61,24 @@ def main(stdscr):
 
                 if choice == 1 or choice == 2:
                     cliente = get_cliente()
-                    listar_alquileres(cliente, choice)
-
                 else:
-                    listar_alquileres(1, choice)
+                    cliente = 0
+
+                listar_alquileres(cliente, choice)
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
             elif current_row_idx == 5:  # Ver cliente
-                dni = int(input("Ingrese el DNI del cliente "))
-                if cliente_existe(dni):
-                    cliente = session.query(Cliente).filter(Cliente.dni == dni).one()
-                    mostrar_cliente(cliente)
-                    if session.query(Alquiler).filter(Alquiler.inquilino == cliente).count() > 0:
-                        alquiler = session.query(Alquiler).filter(Alquiler.inquilino == cliente).one()
-                        print("Alquilando: " + str(alquiler.inmueble))
+                choice = int(input("1. Filtrar por DNI\n2. Todos\n"))
+                if choice == 1:
+                    cliente = get_cliente()
+                    if cliente_existe(cliente):
+                        cliente.mostrar_datos()
                     else:
-                        print("No esta alquilando ninguna propiedad")
-                else:
-                    print("\nCliente no encontrado")
+                        print("Cliente no encontrado")
+                elif choice == 1:
+                    listar_clientes()
+
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
             elif current_row_idx == 6:  # Borrar alquiler

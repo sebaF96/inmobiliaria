@@ -24,5 +24,18 @@ class Cliente(Base):
 
     alquilando = relationship('Alquiler', back_populates="inquilino")
 
+    def mostrar_datos(self):
+        print(self)
+        print("Telefono: " + str(self.telefono))
+        print("Domicilio: " + str(self.domicilio))
+        print("Email: " + str(self.email))
+        print("Dueño de:")
+        for propiedad in self.propiedades:
+            print(propiedad)
+        print("Alquilando:")
+        for alquiler in self.alquilando:
+            print(alquiler.inmueble)
+
     def __repr__(self):
         return str(self.nombre) + ' ' + str(self.apellido) + ' ' + str(self.dni)
+
