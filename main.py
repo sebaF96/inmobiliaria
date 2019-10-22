@@ -6,6 +6,7 @@ import os
 
 def main(stdscr):
     curses.curs_set(0)
+    curses.use_default_colors()
     curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
     current_row_idx = 0
     print_menu(stdscr, current_row_idx)
