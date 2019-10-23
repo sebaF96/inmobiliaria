@@ -160,9 +160,32 @@ def modificar_cliente(cliente):
         elif att == 3:
             cliente.email = str(input("Nuevo email: "))
 
-        db.update(cliente)
-        print("\nActualizado con exito!") if att == 1 or att == 2 or att == 3 else print("\nSaliendo. . .")
+        db.update()
+        print("\nActualizado con exito!") if att == 1 or att == 2 or att == 3 else print("\nSaliendo...")
 
 
-def modificar_propiedad():
-    pass
+def modificar_propiedad(cliente):
+    if db.cliente_existe(cliente):
+        for casa in cliente.propiedades:
+            casa.mostrar_datos()
+        inmueble_id = int(input("\nSeleccione la propiedad a modificar: "))
+        try:
+            casa = db.get_inmueble(inmueble_id)
+            os.system('clear')
+            casa.mostrar_datos()
+            att = int(input(
+                "\nSeleccione que desea modificar\n1. Descripcion\n2. Precio\n3. Habitaciones\n4. Baños\n5. Salir\n"))
+            if att == 1:
+                casa.descripcion = str(input("Ingrese nueva descripcion: "))
+            elif att == 2:
+                casa.precio = int(input("Ingrese nuevo precio: "))
+            elif att == 3:
+                casa.habitaciones = int(input("Ingrese nuevo numero de habitaciones: "))
+            elif att == 4:
+                casa.banios = int(input("Ingrese numero de baños: "))
+
+            db.update()
+            print("\nActualizado con exito!") if att == 1 or att == 2 or att == 3 or att == 4 else print("\nSaliendo...")
+
+        except exc.SQLAlchemyError:
+            print("\nSeleccion incorrecta, reintente")

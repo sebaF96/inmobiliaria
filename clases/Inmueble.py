@@ -23,7 +23,7 @@ class Inmueble(Base):
 
     __alquilado = Column('alquilado', Boolean, default=0)
 
-    __precio = Column('precio', Integer, nullable=False, default=6000)
+    __precio = Column('precio', Integer, nullable=False)
 
     propietarioId = Column(Integer, ForeignKey('cliente.clienteId'), nullable=False)
 

@@ -1,6 +1,6 @@
 from config.menu_config import print_menu, curses, opciones_menu
 from utils.context_functions import agregar_cliente, agregar_alquiler, agregar_propiedad, borrar_propiedad, \
-    borrar_alquiler, imprimir_casas, registrar_pago, modificar_cliente
+    borrar_alquiler, imprimir_casas, registrar_pago, modificar_cliente, modificar_propiedad
 import utils.db_functions as db
 import time
 import os
@@ -118,14 +118,15 @@ def main(stdscr):
                 time.sleep(2)
 
             elif current_row_idx == 10:
-                print("Modificar cliente")
                 cliente = db.get_cliente()
                 modificar_cliente(cliente)
 
                 time.sleep(3)
 
             elif current_row_idx == 11:
-                print("Modificar propiedad")
+                print("Ingrese dni del dueño")
+                cliente = db.get_cliente()
+                modificar_propiedad(cliente)
                 time.sleep(3)
 
             elif current_row_idx == len(opciones_menu) - 1:  # Salir

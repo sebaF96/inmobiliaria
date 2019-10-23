@@ -17,7 +17,7 @@ def delete_from_db(objeto):
     session.commit()
 
 
-def update(objeto):
+def update():
     session.commit()
 
 
