@@ -42,10 +42,6 @@ class Inmueble(Base):
     def inmuebleId(self):
         return self.__inmuebleId
 
-    @inmuebleId.setter
-    def inmuebleId(self, value):
-        self.__inmuebleId = value
-
     @property
     def ubicacion(self):
         return self.__ubicacion

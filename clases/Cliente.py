@@ -41,10 +41,6 @@ class Cliente(Base):
     def clienteId(self):
         return self.__clienteId
 
-    @clienteId.setter
-    def clienteId(self, value):
-        self.__clienteId = value
-
     @property
     def nombre(self):
         return self.__nombre

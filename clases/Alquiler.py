@@ -1,12 +1,19 @@
 from config.db_config import Base
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, func
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Alquiler(Base):
     __tablename__ = 'alquiler'
 
-    alquilerId = Column('alquilerId', Integer, primary_key=True)
+    __alquilerId = Column('alquilerId', Integer, primary_key=True)
+
+    __fechainicio = Column('fechainicio', DateTime, default=func.now())
+
+    __mesesduracion = Column('mesesduracion', Integer, nullable=False)
+
+    __mesespagados = Column('mesespagados', Integer, nullable=False, default=1)
 
     inmuebleId = Column('inmuebleId', ForeignKey('inmueble.inmuebleId'), nullable=False)
 
@@ -16,11 +23,33 @@ class Alquiler(Base):
 
     inquilino = relationship('Cliente', back_populates="alquilando")
 
-    fechainicio = Column('fechainicio', DateTime, default=func.now())
+    @hybrid_property
+    def alquilerId(self):
+        return self.__alquilerId
 
-    mesesduracion = Column('mesesduracion', Integer, nullable=False)
+    @hybrid_property
+    def fechainicio(self):
+        return self.__fechainicio
 
-    mesespagados = Column('mesespagados', Integer, nullable=False, default=1)
+    @fechainicio.setter
+    def fechainicio(self, value):
+        self.__fechainicio = value
+
+    @property
+    def mesesduracion(self):
+        return self.__mesesduracion
+
+    @mesesduracion.setter
+    def mesesduracion(self, value):
+        self.__mesesduracion = value
+
+    @property
+    def mesespagados(self):
+        return self.__mesespagados
+
+    @mesespagados.setter
+    def mesespagados(self, value):
+        self.__mesespagados = value
 
     def __repr__(self):
         return 'Casa: ' + str(self.inmueble) + '\nInquilino:  ' + str(self.inquilino) + '\nDueño:  ' + str(

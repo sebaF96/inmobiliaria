@@ -27,16 +27,20 @@ def agregar_cliente():
 def agregar_propiedad(duenioid):
     propiedad = Inmueble()
 
-    propiedad.ubicacion = str(input("Ubicacion: "))
-    propiedad.habitaciones = int(input("Cantidad de habitaciones: "))
-    propiedad.banios = int(input("Cantidad de baños: "))
-    propiedad.zona = str(input("Zona: "))
-    propiedad.tamanio = str(input("Tamaño: "))
-    propiedad.descripcion = str(input("Descripcion: "))
-    propiedad.propietarioId = duenioid
+    try:
+        propiedad.ubicacion = str(input("Ubicacion: "))
+        propiedad.habitaciones = int(input("Cantidad de habitaciones: "))
+        propiedad.banios = int(input("Cantidad de baños: "))
+        propiedad.zona = str(input("Zona: "))
+        propiedad.tamanio = str(input("Tamaño: "))
+        propiedad.descripcion = str(input("Descripcion: "))
+        propiedad.precio = int(input("Precio: "))
+        propiedad.propietarioId = duenioid
 
-    db.insert_in_db(propiedad)
-    print("\nPropiedad añadida con exito!")
+        db.insert_in_db(propiedad)
+        print("\nPropiedad añadida con exito!")
+    except ValueError:
+        print("Propiedad no añadida. Ha ingresado uno o mas valores incorrectos")
 
 
 def agregar_alquiler(inquilino_id, inmueble_id):
