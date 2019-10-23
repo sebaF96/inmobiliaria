@@ -2,7 +2,7 @@ import curses
 
 opciones_menu = ["Registrar cliente", "Listar propiedades", "Añadir propiedad", "Registrar alquiler", "Ver alquileres",
                  "Ver clientes", "Borrar alquiler", "Borrar propiedad", "Registrar pago", "Imprimir propiedades",
-                 "Salir"]
+                 "Modificar cliente", "Modificar propiedad", "Salir"]
 
 
 def print_menu(stdscr, selected_row_idx):

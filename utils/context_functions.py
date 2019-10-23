@@ -146,3 +146,23 @@ def imprimir_casas(casas_disponibles):
             file.write('\n📏️ Tamaño: ' + str(casa.tamanio))
             file.write('\n💰️ Precio: $' + str(casa.precio))
             file.write('\n--------------------------------------------------------\n')
+
+
+def modificar_cliente(cliente):
+    if db.cliente_existe(cliente):
+        print("\n")
+        cliente.mostrar_datos()
+        att = int(input("\nSeleccione lo que desea modificar\n1. Telefono\n2. Domicilio\n3. Email\n4. Cancelar\n"))
+        if att == 1:
+            cliente.telefono = int(input("Nuevo telefono: "))
+        elif att == 2:
+            cliente.domicilio = str(input("Nuevo domicilio: "))
+        elif att == 3:
+            cliente.email = str(input("Nuevo email: "))
+
+        db.update(cliente)
+        print("\nActualizado con exito!") if att == 1 or att == 2 or att == 3 else print("\nSaliendo. . .")
+
+
+def modificar_propiedad():
+    pass
