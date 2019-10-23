@@ -9,6 +9,8 @@ pyvenv.cfg
 .idea/
 Casas_disponibles.txt
 /config/__init__.py
+/config/__pycache__
 /utils/__init__.py
-/utils/__pycache__/__init__.cpython-36.pyc
-
+/utils/__pycache__
+/clases/__init__.py
+/clases/__pycache__

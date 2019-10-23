@@ -1,7 +1,7 @@
 from config.db_config import Session
-from Cliente import Cliente
-from Alquiler import Alquiler
-from Inmueble import Inmueble
+from clases.Cliente import Cliente
+from clases.Alquiler import Alquiler
+from clases.Inmueble import Inmueble
 from sqlalchemy import exc
 
 session = Session()

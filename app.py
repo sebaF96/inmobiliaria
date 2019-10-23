@@ -1,6 +1,6 @@
 from config.menu_config import print_menu, curses, opciones_menu
-from funciones import agregar_cliente, agregar_alquiler, agregar_propiedad, borrar_propiedad, borrar_alquiler,\
-    imprimir_casas
+from utils.context_functions import agregar_cliente, agregar_alquiler, agregar_propiedad, borrar_propiedad, \
+    borrar_alquiler, imprimir_casas
 import utils.db_functions as db
 import time
 import os
