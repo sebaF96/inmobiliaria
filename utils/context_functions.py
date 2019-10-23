@@ -68,10 +68,10 @@ def borrar_alquiler(cliente):
                 print("\n")
                 print(str(alquiler.alquilerId) + ')')
                 print(alquiler)
-            eleccion = int(input("Seleccione el alquiler que desea borrar: "))
+            alquiler_id = int(input("Seleccione el alquiler que desea borrar: "))
             os.system('clear')
             try:
-                alquiler = db.get_alquiler(eleccion)
+                alquiler = db.get_alquiler(alquiler_id)
                 print(alquiler)
                 confirmar_borrado = True
             except exc.SQLAlchemyError:
@@ -107,15 +107,32 @@ def borrar_propiedad(cliente):
         print("\nSeleccion de propiedad incorrecta. Reintente")
 
 
-'''
-def registrar_pago(Inmueble):
-    meses = int(input("Cantidad de meses a pagar: "))
-    print("\nUsted pagara "+str(meses) + "meses por una suma de $" + str(Inmueble.precio * meses))
-    confirmacion = str(input("Confirmar operacion? (S/N)\n"))
-    if confirmacion != 's' and confirmacion != 'S':
-        meses = 0
-    return meses
-'''
+def registrar_pago(cliente):
+    if db.contar_alquileres(cliente.dni) >= 1:
+        for alquiler in db.listar_alquileres(cliente, 2):
+            print("\n")
+            print(str(alquiler.alquilerId) + ')')
+            print(alquiler)
+        alquiler_id = int(input("\nSeleccione el alquiler a pagar: "))
+        try:
+            alquiler = db.get_alquiler(alquiler_id)
+            os.system('clear')
+            print(alquiler)
+            meses = int(input("\nCantidad de meses a pagar: "))
+            print("\nUsted pagara " + str(meses) + " meses por una suma de $" + str(alquiler.inmueble.precio * meses))
+            confirmacion = str(input("Confirmar operacion? (s/n) "))
+            if confirmacion == 's' or confirmacion == 'S':
+                print("\nPago registrado con exito")
+                alquiler.mesespagados += meses
+                db.update(alquiler)
+            else:
+                print("\n Operacion cancelada")
+
+        except exc.SQLAlchemyError:
+            print("Seleccion incorrecta. Reintente")
+
+    else:
+        print("Este cliente no esta alquilando ninguna propiedad.")
 
 
 def imprimir_casas(casas_disponibles):

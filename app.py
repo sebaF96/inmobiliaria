@@ -1,6 +1,6 @@
 from config.menu_config import print_menu, curses, opciones_menu
 from utils.context_functions import agregar_cliente, agregar_alquiler, agregar_propiedad, borrar_propiedad, \
-    borrar_alquiler, imprimir_casas
+    borrar_alquiler, imprimir_casas, registrar_pago
 import utils.db_functions as db
 import time
 import os
@@ -34,6 +34,8 @@ def main(stdscr):
 
                 agregar_cliente()
                 time.sleep(3)
+
+            # Modificar cliente
 
             elif current_row_idx == 1:  # Listar propiedades
 
@@ -101,20 +103,14 @@ def main(stdscr):
 
                 time.sleep(3)
 
-                '''            
-                elif current_row_idx == 8:  # Registrar pago
-                dni_inquilino = int(input("Ingrese el dni del inquilino: "))
-                if session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni_inquilino).count() == 1:
-                    alquiler = session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni_inquilino).one()
-                    meses = registrar_pago(alquiler.inmueble)
-                    if meses != 0:
-                        alquiler.mesespagados = alquiler.mesespagados + meses
-                        session.commit()
-                        print("Pago registrado con exito")
-                else:
-                    print("Este cliente no existe o no esta alquilando ninguna propiedad")
+            elif current_row_idx == 8:  # Registrar pago
+                print("Ingrese el dni del inquilino")
+                cliente = db.get_cliente()
+                if db.cliente_existe(cliente):
+                    registrar_pago(cliente)
+
                 time.sleep(3)
-                '''
+
             elif current_row_idx == 9:  # Imprimir
                 casas_disponibles = db.listar_inmuebles()
                 imprimir_casas(casas_disponibles)

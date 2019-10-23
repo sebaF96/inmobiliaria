@@ -17,8 +17,8 @@ def delete_from_db(objeto):
     session.commit()
 
 
-def set_alquilado(inmueble, value):
-    inmueble.alquilado = value
+def update(objeto):
+    session.commit()
 
 
 def cliente_existe(cliente):
@@ -85,4 +85,5 @@ def listar_alquileres(cliente, args):
 
 
 def contar_alquileres(dni):
+
     return session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni).count()
