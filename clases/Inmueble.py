@@ -32,11 +32,11 @@ class Inmueble(Base):
     propietario = relationship('Cliente', back_populates="propiedades")
 
     def mostrar_datos(self):
-        print("\n")
-        print(self.inmuebleId, self)
+        print(self)
         print(str(self.banios) + " baños")
         print("Precio: $" + str(self.precio))
         print("Dueño:", self.propietario)
+        print("\n")
 
     @hybrid_property
     def inmuebleId(self):

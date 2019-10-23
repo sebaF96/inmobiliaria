@@ -58,11 +58,7 @@ def main(stdscr):
                 inquilino = db.get_cliente()
 
                 if db.cliente_existe(inquilino):
-                    for casa in db.listar_inmuebles():
-                        casa.mostrar_datos()
-
-                    inmueble_id = int(input("\nIngrese el numero de propiedad: "))
-                    agregar_alquiler(inquilino.clienteId, inmueble_id)
+                    agregar_alquiler(inquilino.clienteId)
 
                 time.sleep(3)
 

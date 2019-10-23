@@ -43,10 +43,16 @@ def agregar_propiedad(duenioid):
         print("Propiedad no añadida. Ha ingresado uno o mas valores incorrectos")
 
 
-def agregar_alquiler(inquilino_id, inmueble_id):
+def agregar_alquiler(inquilino_id):
     alquiler = Alquiler()
-
     alquiler.inquilinoId = inquilino_id
+
+    for casa in db.listar_inmuebles():
+        print(str(casa.inmuebleId) + ')')
+        casa.mostrar_datos()
+
+    inmueble_id = int(input("\nIngrese el numero de propiedad: "))
+
     try:
         alquiler.inmuebleId = inmueble_id
         alquiler.mesesduracion = int(input("Meses de duracion: "))
@@ -92,6 +98,7 @@ def borrar_alquiler(cliente):
 def borrar_propiedad(cliente):
     propiedades = db.listar_inmuebles(cliente)
     for casa in propiedades:
+        print(str(casa.inmuebleId) + ')')
         casa.mostrar_datos()
 
     propiedad_id = int(input("\n\nSeleccione la propiedad a eliminar "))
@@ -167,6 +174,8 @@ def modificar_cliente(cliente):
 def modificar_propiedad(cliente):
     if db.cliente_existe(cliente):
         for casa in cliente.propiedades:
+            print("\n")
+            print(str(casa.inmuebleId) + ')')
             casa.mostrar_datos()
         inmueble_id = int(input("\nSeleccione la propiedad a modificar: "))
         try:
