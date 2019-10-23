@@ -1,5 +1,7 @@
-from menu_config import *
-from funciones import *
+from config.menu_config import print_menu, curses, opciones_menu
+from funciones import agregar_cliente, agregar_alquiler, agregar_propiedad, borrar_propiedad, borrar_alquiler,\
+    imprimir_casas
+import utils.db_functions as db
 import time
 import os
 
@@ -35,7 +37,7 @@ def main(stdscr):
 
             elif current_row_idx == 1:  # Listar propiedades
 
-                for casa in listar_propiedades():
+                for casa in db.listar_inmuebles():
                     casa.mostrar_datos()
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
@@ -43,18 +45,18 @@ def main(stdscr):
             elif current_row_idx == 2:  # Agregar propiedad
 
                 print("Ingrese el dni del dueño de la propiedad\n")
-                cliente = get_cliente()
-                if cliente_existe(cliente):
+                cliente = db.get_cliente()
+                if db.cliente_existe(cliente):
                     agregar_propiedad(cliente.clienteId)
 
                 time.sleep(3)
 
             elif current_row_idx == 3:  # Registrar alquiler
                 print("Ingrese DNI del inquilino")
-                inquilino = get_cliente()
+                inquilino = db.get_cliente()
 
-                if cliente_existe(inquilino):
-                    for casa in listar_propiedades():
+                if db.cliente_existe(inquilino):
+                    for casa in db.listar_inmuebles():
                         casa.mostrar_datos()
 
                     inmueble_id = int(input("\nIngrese el numero de propiedad: "))
@@ -66,19 +68,19 @@ def main(stdscr):
                 choice = int(input("1. DNI dueño\n2. DNI inquilino\n3. Todos\n"))
 
                 if choice == 1 or choice == 2:
-                    cliente = get_cliente()
+                    cliente = db.get_cliente()
                 else:
                     cliente = 0
 
-                for alquiler in listar_alquileres(cliente, choice):
+                for alquiler in db.listar_alquileres(cliente, choice):
                     print("\n")
                     print(alquiler)
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
             elif current_row_idx == 5:  # Ver cliente
-                choice = int(input("1. Filtrar por DNI\n2. Filtrar por apellido\n3. Todos"))
-                for cliente in listar_clientes(choice):
+                choice = int(input("1. Filtrar por DNI\n2. Filtrar por apellido\n3. Todos\n"))
+                for cliente in db.listar_clientes(choice):
                     print("\n")
                     cliente.mostrar_datos()
 
@@ -86,20 +88,21 @@ def main(stdscr):
 
             elif current_row_idx == 6:  # Borrar alquiler
                 print("Ingrese el dni del inquilino")
-                inquilino = get_cliente()
+                inquilino = db.get_cliente()
                 borrar_alquiler(inquilino)
 
                 time.sleep(3)
 
             elif current_row_idx == 7:  # Borras propiedad
                 print("Ingrese el dni del dueño")
-                cliente = get_cliente()
-                if cliente_existe(cliente):
+                cliente = db.get_cliente()
+                if db.cliente_existe(cliente):
                     borrar_propiedad(cliente)
 
                 time.sleep(3)
 
-            elif current_row_idx == 8:  # Registrar pago
+                '''            
+                elif current_row_idx == 8:  # Registrar pago
                 dni_inquilino = int(input("Ingrese el dni del inquilino: "))
                 if session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni_inquilino).count() == 1:
                     alquiler = session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni_inquilino).one()
@@ -111,9 +114,9 @@ def main(stdscr):
                 else:
                     print("Este cliente no existe o no esta alquilando ninguna propiedad")
                 time.sleep(3)
-
+                '''
             elif current_row_idx == 9:  # Imprimir
-                casas_disponibles = listar_propiedades()
+                casas_disponibles = db.listar_inmuebles()
                 imprimir_casas(casas_disponibles)
                 print("Archivo generado con exito!")
                 time.sleep(3)

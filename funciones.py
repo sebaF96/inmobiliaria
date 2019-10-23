@@ -1,38 +1,9 @@
-from db_config import Session
 from Cliente import Cliente
 from Alquiler import Alquiler
 from Inmueble import Inmueble
 from sqlalchemy import exc
 import os
-
-session = Session()
-
-
-def insert_in_db(objeto):
-    session.add(objeto)
-    session.commit()
-
-
-def delete_from_db(objeto):
-    session.delete(objeto)
-    session.commit()
-
-
-def cliente_existe(cliente):
-    existe = False
-    if cliente is not None:
-        if session.query(Cliente).filter(Cliente.dni == cliente.dni).count() == 1:
-            existe = True
-    return existe
-
-
-def get_cliente():
-    dni = int(input("DNI: "))
-    try:
-        return session.query(Cliente).filter(Cliente.dni == dni).one()
-    except exc.SQLAlchemyError:
-        print("No existe un cliente de DNI " + str(dni))
-        return None
+import utils.db_functions as db
 
 
 def agregar_cliente():
@@ -40,37 +11,17 @@ def agregar_cliente():
     cliente = Cliente()
 
     cliente.dni = str(input("DNI: "))
-    if not cliente_existe(cliente):
+    if not db.cliente_existe(cliente):
         cliente.nombre = str(input("Nombre: "))
         cliente.apellido = str(input("Apellido: "))
         cliente.telefono = int(input("Telefono: "))
         cliente.domicilio = str(input("Domicilio: "))
         cliente.email = str(input("Email: "))
 
-        insert_in_db(cliente)
+        db.insert_in_db(cliente)
         print("\nCliente añadido con exito!")
     else:
         print("\nEl cliente que esta intentando añadir ya existe")
-
-
-def listar_clientes(filtro):
-    lista_clientes = []
-    if filtro == 1:     # Filtrar por DNI
-        cliente = get_cliente()
-        if cliente_existe(cliente):
-            lista_clientes.append(cliente)
-    elif filtro == 2:
-        apellido = str(input("Apellido: "))
-        lista_clientes = session.query(Cliente).filter(Cliente.apellido.ilike('%'+apellido+'%')).all()
-
-    elif filtro == 3:
-        lista_clientes = session.query(Cliente).all()
-
-    return lista_clientes
-
-
-def listar_propiedades():
-    return session.query(Inmueble).filter(Inmueble.alquilado == 0).order_by(Inmueble.inmuebleId).all()
 
 
 def agregar_propiedad(duenioid):
@@ -84,7 +35,7 @@ def agregar_propiedad(duenioid):
     propiedad.descripcion = str(input("Descripcion: "))
     propiedad.propietarioId = duenioid
 
-    insert_in_db(propiedad)
+    db.insert_in_db(propiedad)
     print("\nPropiedad añadida con exito!")
 
 
@@ -95,35 +46,20 @@ def agregar_alquiler(inquilino_id, inmueble_id):
     try:
         alquiler.inmuebleId = inmueble_id
         alquiler.mesesduracion = int(input("Meses de duracion: "))
-        casa = session.query(Inmueble).filter(Inmueble.inmuebleId == inmueble_id).one()
+        casa = db.get_inmueble(inmueble_id)
         casa.alquilado = 1
-        insert_in_db(alquiler)
+        db.insert_in_db(alquiler)
 
         print("Alquiler registrado con exito!")
     except exc.SQLAlchemyError:
         print("\nNo se pudo registrar alquiler. Seleccion de casa incorrecta")
 
 
-def listar_alquileres(cliente, args):
-    alquileres = []
-
-    if args == 1 and cliente_existe(cliente):   # Filtrar por dueño
-        alquileres = session.query(Alquiler).join(Inmueble).join(Cliente).filter(Cliente.dni == cliente.dni).all()
-
-    elif args == 2 and cliente_existe(cliente):  # Filtrar por dueño
-        alquileres = session.query(Alquiler).join(Cliente).filter(Cliente.dni == cliente.dni).all()
-
-    elif args == 3:
-        alquileres = session.query(Alquiler).order_by(Alquiler.fechainicio).all()
-
-    return alquileres
-
-
 def borrar_alquiler(cliente):
-    if cliente_existe(cliente):
-        cantidad_alquileres = session.query(Alquiler).join(Cliente).filter(Cliente.dni == cliente.dni).count()
+    if db.cliente_existe(cliente):
+        cantidad_alquileres = db.contar_alquileres(cliente.dni)
         if cantidad_alquileres >= 1:
-            alquileres = listar_alquileres(cliente, 2)
+            alquileres = db.listar_alquileres(cliente, 2)
             for alquiler in alquileres:
                 print("\n")
                 print(str(alquiler.alquilerId) + ')')
@@ -131,7 +67,7 @@ def borrar_alquiler(cliente):
             eleccion = int(input("Seleccione el alquiler que desea borrar: "))
             os.system('clear')
             try:
-                alquiler = session.query(Alquiler).filter(Alquiler.alquilerId == eleccion).one()
+                alquiler = db.get_alquiler(eleccion)
                 print(alquiler)
                 confirmar_borrado = True
             except exc.SQLAlchemyError:
@@ -145,29 +81,29 @@ def borrar_alquiler(cliente):
             confirmacion = str(input("Seguro que desea borrar el alquiler? (s/n) "))
             if confirmacion == 'S' or confirmacion == 's':
                 alquiler.inmueble.alquilado = 0
-                delete_from_db(alquiler)
+                db.delete_from_db(alquiler)
                 print("Alquiler borrado con exito")
 
 
 def borrar_propiedad(cliente):
-    propiedades = session.query(Inmueble).filter(Inmueble.alquilado == 0, Inmueble.propietario == cliente).all()
+    propiedades = db.listar_inmuebles(cliente)
     for casa in propiedades:
         casa.mostrar_datos()
 
     propiedad_id = int(input("\n\nSeleccione la propiedad a eliminar "))
     try:
-        propiedad = session.query(Inmueble).filter(Inmueble.inmuebleId == propiedad_id).one()
+        propiedad = db.get_inmueble(propiedad_id)
         os.system('clear')
         propiedad.mostrar_datos()
         confirmacion = str(input("\nSeguro que desea borrar esta propiedad? (s/n)"))
         if confirmacion == 'S' or confirmacion == 's':
-            delete_from_db(propiedad)
+            db.delete_from_db(propiedad)
             print("\nPropiedad borrada con exito!")
     except exc.SQLAlchemyError:
         print("\nSeleccion de propiedad incorrecta. Reintente")
 
 
-
+'''
 def registrar_pago(Inmueble):
     meses = int(input("Cantidad de meses a pagar: "))
     print("\nUsted pagara "+str(meses) + "meses por una suma de $" + str(Inmueble.precio * meses))
@@ -175,18 +111,17 @@ def registrar_pago(Inmueble):
     if confirmacion != 's' and confirmacion != 'S':
         meses = 0
     return meses
+'''
 
 
 def imprimir_casas(casas_disponibles):
-    file = open("Casas_disponibles.txt", "w")
+    with open("Casas_disponibles.txt", "w") as file:
 
-    for casa in casas_disponibles:
-        file.write('📍️ Ubicacion: ' + str(casa.ubicacion))
-        file.write('\n🛏️ Habitaciones: ' + str(casa.habitaciones))
-        file.write('\n🚽️ Baños: ' + str(casa.banios))
-        file.write('\n🏘️ Zona: ' + str(casa.zona))
-        file.write('\n📏️ Tamaño: ' + str(casa.tamanio))
-        file.write('\n💰️ Precio: $' + str(casa.precio))
-        file.write('\n--------------------------------------------------------\n')
-
-    file.close()
+        for casa in casas_disponibles:
+            file.write('📍️ Ubicacion: ' + str(casa.ubicacion))
+            file.write('\n🛏️ Habitaciones: ' + str(casa.habitaciones))
+            file.write('\n🚽️ Baños: ' + str(casa.banios))
+            file.write('\n🏘️ Zona: ' + str(casa.zona))
+            file.write('\n📏️ Tamaño: ' + str(casa.tamanio))
+            file.write('\n💰️ Precio: $' + str(casa.precio))
+            file.write('\n--------------------------------------------------------\n')
