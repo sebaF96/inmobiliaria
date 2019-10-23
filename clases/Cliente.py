@@ -27,15 +27,14 @@ class Cliente(Base):
 
     def mostrar_datos(self):
         print(self)
-        print("Telefono: " + str(self.telefono))
         print("Domicilio: " + str(self.domicilio))
         print("Email: " + str(self.email))
         print("Dueño de:")
         for propiedad in self.propiedades:
-            print(propiedad)
+            print('* ' + str(propiedad))
         print("Alquilando:")
         for alquiler in self.alquilando:
-            print(alquiler.inmueble)
+            print('* ' + str(alquiler.inmueble))
 
     @hybrid_property
     def clienteId(self):
@@ -90,4 +89,4 @@ class Cliente(Base):
         self.__dni = value
 
     def __repr__(self):
-        return str(self.nombre) + ' ' + str(self.apellido) + ' ' + str(self.dni)
+        return str(self.nombre) + ' ' + str(self.apellido) + ' ' + str(self.dni) + " - Telefono: " + str(self.telefono)

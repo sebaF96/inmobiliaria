@@ -55,4 +55,4 @@ class Alquiler(Base):
         return 'Casa: ' + str(self.inmueble) + '\nInquilino:  ' + str(self.inquilino) + '\nDueño:  ' + str(
             self.inmueble.propietario) + "\nInicio de alquiler: " + str(
             self.fechainicio.strftime("%d %B, %Y")) + "\nMeses de duracion: " + str(
-            self.mesesduracion) + '\nMeses pagados: ' + str(self.mesespagados)
+            self.mesesduracion) + '\nPrecio: $' + str(self.inmueble.precio) + '\nMeses pagados: ' + str(self.mesespagados)

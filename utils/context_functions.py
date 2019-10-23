@@ -124,9 +124,9 @@ def registrar_pago(cliente):
             if confirmacion == 's' or confirmacion == 'S':
                 print("\nPago registrado con exito")
                 alquiler.mesespagados += meses
-                db.update(alquiler)
+                db.update()
             else:
-                print("\n Operacion cancelada")
+                print("\nOperacion cancelada")
 
         except exc.SQLAlchemyError:
             print("Seleccion incorrecta. Reintente")
