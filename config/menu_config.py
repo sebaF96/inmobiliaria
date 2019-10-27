@@ -21,3 +21,8 @@ def print_menu(stdscr, selected_row_idx):
 
     stdscr.refresh()
 
+
+def set_menu():
+    curses.curs_set(0)
+    curses.use_default_colors()
+    curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)

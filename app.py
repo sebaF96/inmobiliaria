@@ -1,16 +1,12 @@
-from config.menu_config import print_menu, curses, opciones_menu
-from utils.context_functions import agregar_cliente, agregar_alquiler, agregar_propiedad, borrar_propiedad, \
-    borrar_alquiler, imprimir_casas, registrar_pago, modificar_cliente, modificar_propiedad
-import utils.db_functions as db
+from config.menu_config import print_menu, curses, opciones_menu, set_menu
+from utils.context_functions import *
 import time
 import os
 
 
 def main(stdscr):
-    curses.curs_set(0)
-    curses.use_default_colors()
-    curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
     current_row_idx = 0
+    set_menu()
     print_menu(stdscr, current_row_idx)
 
     while 1:
@@ -33,7 +29,7 @@ def main(stdscr):
             if current_row_idx == 0:  # Agregar cliente
 
                 agregar_cliente()
-                time.sleep(3)
+                time.sleep(2.2)
 
             # Modificar cliente
 
@@ -51,7 +47,7 @@ def main(stdscr):
                 if db.cliente_existe(cliente):
                     agregar_propiedad(cliente.clienteId)
 
-                time.sleep(3)
+                time.sleep(2.2)
 
             elif current_row_idx == 3:  # Registrar alquiler
                 print("Ingrese DNI del inquilino")
@@ -60,7 +56,7 @@ def main(stdscr):
                 if db.cliente_existe(inquilino):
                     agregar_alquiler(inquilino.clienteId)
 
-                time.sleep(3)
+                time.sleep(2.2)
 
             elif current_row_idx == 4:  # Listar alquileres
                 choice = int(input("1. DNI dueño\n2. DNI inquilino\n3. Todos\n"))
@@ -89,7 +85,7 @@ def main(stdscr):
                 inquilino = db.get_cliente()
                 borrar_alquiler(inquilino)
 
-                time.sleep(3)
+                time.sleep(2.2)
 
             elif current_row_idx == 7:  # Borras propiedad
                 print("Ingrese el dni del dueño")
@@ -97,7 +93,7 @@ def main(stdscr):
                 if db.cliente_existe(cliente):
                     borrar_propiedad(cliente)
 
-                time.sleep(3)
+                time.sleep(2.2)
 
             elif current_row_idx == 8:  # Registrar pago
                 print("Ingrese el dni del inquilino")
@@ -105,25 +101,25 @@ def main(stdscr):
                 if db.cliente_existe(cliente):
                     registrar_pago(cliente)
 
-                time.sleep(3)
+                time.sleep(2.2)
 
             elif current_row_idx == 9:  # Imprimir
                 casas_disponibles = db.listar_inmuebles()
                 imprimir_casas(casas_disponibles)
                 print("Archivo generado con exito!")
-                time.sleep(2)
+                time.sleep(1.3)
 
             elif current_row_idx == 10:
                 cliente = db.get_cliente()
                 modificar_cliente(cliente)
 
-                time.sleep(3)
+                time.sleep(2.2)
 
             elif current_row_idx == 11:
                 print("Ingrese dni del dueño")
                 cliente = db.get_cliente()
                 modificar_propiedad(cliente)
-                time.sleep(3)
+                time.sleep(2.2)
 
             elif current_row_idx == len(opciones_menu) - 1:  # Salir
                 print("Hasta luego!")

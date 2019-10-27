@@ -139,7 +139,7 @@ def registrar_pago(cliente):
             print("Seleccion incorrecta. Reintente")
 
     else:
-        print("Este cliente no esta alquilando ninguna propiedad.")
+        print("\nEste cliente no esta alquilando ninguna propiedad.")
 
 
 def imprimir_casas(casas_disponibles):
@@ -152,7 +152,7 @@ def imprimir_casas(casas_disponibles):
             file.write('\n🏘️ Zona: ' + str(casa.zona))
             file.write('\n📏️ Tamaño: ' + str(casa.tamanio))
             file.write('\n💰️ Precio: $' + str(casa.precio))
-            file.write('\n--------------------------------------------------------\n')
+            file.write('\n' + '='*56 + '\n')
 
 
 def modificar_cliente(cliente):
@@ -172,9 +172,9 @@ def modificar_cliente(cliente):
 
 
 def modificar_propiedad(cliente):
-    if db.cliente_existe(cliente):
+    if db.cliente_existe(cliente) and db.contar_propiedades(cliente) >= 1:
         for casa in cliente.propiedades:
-            print("\n")
+            print("="*78)
             print(str(casa.inmuebleId) + ')')
             casa.mostrar_datos()
         inmueble_id = int(input("\nSeleccione la propiedad a modificar: "))
@@ -194,7 +194,10 @@ def modificar_propiedad(cliente):
                 casa.banios = int(input("Ingrese numero de baños: "))
 
             db.update()
-            print("\nActualizado con exito!") if att == 1 or att == 2 or att == 3 or att == 4 else print("\nSaliendo...")
+            print("\nActualizado con exito!") if att == 1 or att == 2 or att == 3 or att == 4 else print("\nVolviendo...")
 
         except exc.SQLAlchemyError:
             print("\nSeleccion incorrecta, reintente")
+
+    elif db.cliente_existe(cliente) and db.contar_propiedades(cliente) < 1:
+        print("\nEste cliente no es dueño de ninguna propiedad")

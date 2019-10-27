@@ -36,7 +36,7 @@ class Inmueble(Base):
         print(str(self.banios) + " baños")
         print("Precio: $" + str(self.precio))
         print("Dueño:", self.propietario)
-        print("\n")
+        print("="*78)
 
     @hybrid_property
     def inmuebleId(self):

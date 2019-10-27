@@ -87,3 +87,7 @@ def listar_alquileres(cliente, args):
 def contar_alquileres(dni):
 
     return session.query(Alquiler).join(Cliente).filter(Cliente.dni == dni).count()
+
+
+def contar_propiedades(cliente):
+    return session.query(Inmueble).filter(Inmueble.propietario == cliente).count()
