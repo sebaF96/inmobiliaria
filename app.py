@@ -61,14 +61,10 @@ def main(stdscr):
             elif current_row_idx == 4:  # Listar alquileres
                 choice = int(input("1. DNI dueño\n2. DNI inquilino\n3. Todos\n"))
 
-                if choice == 1 or choice == 2:
-                    cliente = db.get_cliente()
-                else:
-                    cliente = 0
+                cliente = db.get_cliente() if choice == 1 or choice == 2 else 0
 
                 for alquiler in db.listar_alquileres(cliente, choice):
-                    print("\n")
-                    print(alquiler)
+                    print("\n" + str(alquiler))
 
                 goback = str(input("\n\nPresione una tecla para volver al menu..."))
 
@@ -107,6 +103,7 @@ def main(stdscr):
                 casas_disponibles = db.listar_inmuebles()
                 imprimir_casas(casas_disponibles)
                 print("Archivo generado con exito!")
+
                 time.sleep(1.3)
 
             elif current_row_idx == 10:
@@ -119,6 +116,7 @@ def main(stdscr):
                 print("Ingrese dni del dueño")
                 cliente = db.get_cliente()
                 modificar_propiedad(cliente)
+
                 time.sleep(2.2)
 
             elif current_row_idx == len(opciones_menu) - 1:  # Salir
