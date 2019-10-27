@@ -5,7 +5,7 @@ agregar, modificar, y llevar cuenta de distintas propiedades clientes y alquiler
 </p>
 <hr>
 
-![MenuPreview](screenshots/preview.png)
+<img src="screenshots/preview.png" alt="Vista previa">
 
 <h3> Recursos utilizados: </h3>
 <ul>
@@ -16,15 +16,24 @@ agregar, modificar, y llevar cuenta de distintas propiedades clientes y alquiler
 </ul>
 
 <hr>
-<h3> Diagramas </h3>
+<h3> Estructura del proyecto</h3>
 <p> Diagrama de entidad relacion </p>
 
-![EER](screenshots/EER.png)
+
+<img src="screenshots/EER.png" alt="Diagrama de entidad-relacion">
 
 <br>
 <p>Diagrama de clases</p>
 
-![CLASES](screenshots/clases.png)
+<img src="screenshots/clases.png" alt="Diagrama clases" height="80%" width="80%">
+
+<p>Estructura</p>
+
+<img src="screenshots/estructura.png" alt="Estructura" height="50%" width="50%" >
+
+<p>~735 lineas de codigo</p>
+
+
 
 
 <br>
@@ -107,4 +116,5 @@ Los pasos que contienen  :wrench: son de configuracion y solo tendras que llevar
 <ul>
     <li> <a href="https://github.com/nikhilkumarsingh"> Nikhil Kumar Singh </a>
     <li> <a href="https://pythonista.io/cursos/py121/introduccion-a-sql-alchemy"> Pythonista.io </a>
+    <li> <a href="https://www.lucidchart.com/pages/es"> Lucidchart </a>
 </ul>
