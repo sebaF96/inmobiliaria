@@ -31,8 +31,6 @@ def main(stdscr):
                 agregar_cliente()
                 time.sleep(2.2)
 
-            # Modificar cliente
-
             elif current_row_idx == 1:  # Listar propiedades
 
                 for casa in db.listar_inmuebles():
@@ -106,13 +104,13 @@ def main(stdscr):
 
                 time.sleep(1.3)
 
-            elif current_row_idx == 10:
+            elif current_row_idx == 10:   # Modificar cliente
                 cliente = db.get_cliente()
                 modificar_cliente(cliente)
 
                 time.sleep(2.2)
 
-            elif current_row_idx == 11:
+            elif current_row_idx == 11:   # Modificar propiedad
                 print("Ingrese dni del dueño")
                 cliente = db.get_cliente()
                 modificar_propiedad(cliente)
