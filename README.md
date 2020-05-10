@@ -1,8 +1,5 @@
 <h1>Inmobiliaria de alquileres :house_with_garden:</h1>
 <h3> Universidad de Mendoza</h3>
-<p> Pequeño software de administracion de inmobiliaria de alquileres, con el cual podremos 
-agregar, modificar, y llevar cuenta de distintas propiedades clientes y alquileres. 
-</p>
 <hr>
 
 <img src="screenshots/preview.png" alt="Vista previa">
@@ -71,10 +68,11 @@ pip install -r requeriments.txt
 <li> :wrench: Crear archivo .env con la configuracion de tu base de datos MySQL
 
 ```
-vi .env
+touch .env
+gedit .env
 ```
 Pegar lo siguiente en el archivo y completarlo con las confuguraciones de tu base de datos <br><br>
-export DB_CONECTION=Tu_usuario:TuContraseña<br>
+export DB_CONECTION=TuUsuario:TuContraseña<br>
 export DB_SCHEMA=NombreDeTuBase<br>
 export DB_HOST=HostDeTuBase
 <br><br>
@@ -97,24 +95,3 @@ python3 app.py
 Los pasos que contienen  :wrench: son de configuracion y solo tendras que llevarlos a cabo la primera vez
 
 <hr>
-
-<h3>Conclusion</h3>
-
-<p> Problemas con los que me encontre :x:</p>
-<ul>
-    <li> Idea inicial
-    <li> Dependencia ciruclar
-    <li> Fechas
-</ul>
-<p> Aspectos positivos :heavy_check_mark:</p>
-<ul>
-    <li> git branch / git merge
-    <li> UML
-</ul>
-
-<p> Reconocimientos :recycle: </p>
-<ul>
-    <li> <a href="https://github.com/nikhilkumarsingh"> Nikhil Kumar Singh </a>
-    <li> <a href="https://pythonista.io/cursos/py121/introduccion-a-sql-alchemy"> Pythonista.io </a>
-    <li> <a href="https://www.lucidchart.com/pages/es"> Lucidchart </a>
-</ul>
